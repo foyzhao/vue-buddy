@@ -2,6 +2,19 @@
   "name": "vue-buddy",
   "version": "0.0.1",
   "author": "Foy",
-  "description": "A Component Library for Vue.js",
-  "homepage": "https://github.com/foyzhao/vue-buddy"
+  "files": [
+    "dist/*.js"
+  ],
+  "module": "dist/vue-buddy.esm.js",
+  "description": "A component library for Vue.js",
+  "homepage": "https://github.com/foyzhao/vue-buddy",
+  "keywords": [
+    "vue",
+    "component",
+    "library"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.5.2"
+  }
 }

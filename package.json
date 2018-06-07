@@ -1,20 +1,27 @@
 {
   "name": "vue-buddy",
   "version": "0.0.1",
-  "author": "Foy",
-  "files": [
-    "dist/*.js"
-  ],
-  "module": "dist/vue-buddy.esm.js",
   "description": "A component library for Vue.js",
+  "author": "Foy",
+  "license": "MIT",
   "homepage": "https://github.com/foyzhao/vue-buddy",
   "keywords": [
     "vue",
     "component",
     "library"
   ],
-  "license": "MIT",
+  "files": [
+    "src/*"
+  ],
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
   "peerDependencies": {
-    "vue": "^2.5.2"
-  }
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "vue": "^2.5.16"
+  },
+  "dependencies": {}
 }

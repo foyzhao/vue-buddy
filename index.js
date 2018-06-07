@@ -1,7 +1,7 @@
-import KeepRoot from './components/keep-root'
+import KeepBack from './components/keep-back'
 
 function install(Vue) {
-  Vue.component('KeepRoot', KeepRoot);
+  Vue.component('KeepBack', KeepBack);
 }
 
 export default {install}

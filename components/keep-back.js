@@ -1,5 +1,5 @@
 export default {
-  name: 'keep-root',
+  name: 'keep-back',
   abstract: true,
   created() {
     this.cache = {};

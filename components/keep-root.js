@@ -17,10 +17,8 @@ export default {
     if (vNode && vNode.componentOptions && this.$route) {
       const key = this.$route.path;
       if (this.cache[key]) {
-        // console.log('load from cache ' + key);
         vNode.componentInstance = this.cache[key].componentInstance;
       } else {
-        // console.log('save to cache ' + key);
         this.cache[key] = vNode;
       }
       vNode.data.keepAlive = true;
@@ -32,7 +30,6 @@ export default {
       const path = this.$route.path;
       for (const key in this.cache) {
         if (key !== path && key.substr(0, path.length) === path) {
-          // console.log('drop cache ' + key);
           this.cache[key].componentInstance.$destroy();
           delete this.cache[key];
         }

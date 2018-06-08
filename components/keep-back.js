@@ -6,6 +6,9 @@ export default {
   },
   render() {
     const slots = this.$slots.default;
+    if (!slots || !slots.length) {
+      return
+    }
     let vNode;
     for (let i = 0; i < slots.length; i++) {
       const slot = slots[i];
@@ -23,7 +26,7 @@ export default {
       }
       vNode.data.keepAlive = true;
     }
-    return vNode || (slots && slots[0]);
+    return vNode || slots[0];
   },
   watch: {
     $route() {

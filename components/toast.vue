@@ -30,7 +30,7 @@
     position fixed
     left 0
     right 0
-    bottom 18%
+    bottom 24%
     z-index 9999
     text-align center
     transition .4s
@@ -46,7 +46,7 @@
       background #444
       border-radius 2px
       word-break break-all
-      font-size .8rem
+      font-size .9rem
       color #fff
     }
   }

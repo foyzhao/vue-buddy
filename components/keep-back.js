@@ -2,6 +2,7 @@ export default {
   name: 'keep-back',
   abstract: true,
   created() {
+    this.keys = [history.state.key];
     this.cache = {};
   },
   render() {
@@ -18,7 +19,7 @@ export default {
       }
     }
     if (vNode && vNode.componentOptions && this.$route) {
-      const key = this.$route.path;
+      const key = history.state.key + '-' + vNode.tag;
       if (this.cache[key]) {
         vNode.componentInstance = this.cache[key].componentInstance;
       } else {
@@ -28,22 +29,33 @@ export default {
     }
     return vNode || slots[0];
   },
-  watch: {
-    $route() {
-      const path = this.$route.path;
+  methods: {
+    clearCache(k) {
       for (const key in this.cache) {
-        if (key !== path && key.substr(0, path.length) === path) {
+        if (!k || key.indexOf(k) === 0) {
           this.cache[key].componentInstance.$destroy();
           delete this.cache[key];
         }
       }
     }
   },
-  destroyed() {
-    for (const key in this.cache) {
-      this.cache[key].componentInstance.$destroy();
-      this.cache[key] = null;
+  watch: {
+    $route(to, from) {
+      const key = history.state.key;
+      const index = this.keys.indexOf(key);
+      if (index >= 0) {
+        this.keys.splice(index + 1).forEach(this.clearCache);
+      } else if (from.path.indexOf(to.path) === 0) {
+        this.clearCache();
+        this.keys = [key];
+      } else {
+        this.keys.push(key);
+      }
     }
+  },
+  destroyed() {
+    this.clearCache();
+    this.keys = null;
     this.cache = null;
   }
 }

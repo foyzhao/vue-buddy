@@ -16,7 +16,7 @@
       }
     },
     methods: {
-      notify(text, type, time = 2000) {
+      $notify(text, time = 2000, type = 'info') {
         const item = {
           text,
           type,
@@ -25,6 +25,12 @@
           }, time)
         };
         this.list.push(item);
+      },
+      $notifySuccess(text, time) {
+        this.$notify(text, time, 'success');
+      },
+      $notifyError(text, time) {
+        this.$notify(text, time, 'error');
       }
     }
   }

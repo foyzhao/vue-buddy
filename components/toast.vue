@@ -1,7 +1,7 @@
 <template>
   <transition>
-    <div v-if="queue.length">
-      <p>{{queue[0]}}</p>
+    <div class="toast-wrapper" v-if="queue.length">
+      <p class="toast">{{queue[0]}}</p>
     </div>
   </transition>
 </template>
@@ -25,8 +25,8 @@
   }
 </script>
 
-<style lang="stylus" scoped>
-  div {
+<style lang="stylus">
+  .toast-wrapper {
     position fixed
     left 0
     right 0
@@ -39,7 +39,7 @@
       transform translateY(20px)
       opacity 0
     }
-    p {
+    > .toast {
       display inline-block
       margin 0 12%
       padding .5rem .8rem

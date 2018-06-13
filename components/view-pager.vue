@@ -1,9 +1,11 @@
 <template>
   <div class="view-pager" @touchstart="onTouchStart">
-    <div class="view-pager-wrapper" :style="style">
+    <div class="wrapper" :style="style">
       <slot></slot>
     </div>
-    <slot name="cover"></slot>
+    <div class="cover">
+      <slot name="cover"></slot>
+    </div>
   </div>
 </template>
 
@@ -128,15 +130,24 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
   .view-pager {
     position relative
     overflow hidden
-    > .view-pager-wrapper {
+    > .wrapper {
       display flex
       align-items flex-start
       > * {
         flex 0 0 100%
+      }
+    }
+    > .cover {
+      position absolute
+      left 0
+      bottom 0
+      width 100%
+      &:empty {
+        display none
       }
     }
   }

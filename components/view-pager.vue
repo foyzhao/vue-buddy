@@ -1,9 +1,9 @@
 <template>
   <div class="view-pager" @touchstart="onTouchStart">
-    <div :style="style">
+    <div class="view-pager-wrapper" :style="style">
       <slot></slot>
     </div>
-    <slot name="indicator"></slot>
+    <slot name="cover"></slot>
   </div>
 </template>
 
@@ -15,12 +15,13 @@
         default: 0
       },
       total: {
-        type: Number,
-        default: 0
+        type: Number
       }
     },
     data() {
       return {
+        mCurrent: this.current,
+        mTotal: this.total,
         width: 0,
         state: 0,
         offset: 0,
@@ -34,24 +35,35 @@
     },
     mounted() {
       this.onResize();
+      if (this.total === undefined) {
+        this.$nextTick(() => {
+          this.mTotal = this.$el.children[0].children.length;
+        });
+      }
     },
     watch: {
       current(value, oldValue) {
-        if (value < 0 || value && value >= this.total) {
+        if (value < 0 || value && value >= this.mTotal || 0) {
           this.$emit('update:current', oldValue);
+        } else {
+          this.mCurrent = value;
         }
       },
       total(value) {
-        if (this.current >= value) {
-          this.$emit('update:current', Math.max(0, value - 1));
+        this.mTotal = value;
+        if (this.mCurrent >= this.mTotal) {
+          this.mCurrent = Math.max(0, value - 1);
         }
+      },
+      mCurrent(value) {
+        this.$emit('update:current', value);
       }
     },
     computed: {
       style() {
         return {
-          transform: `translateX(${this.offset - this.width * this.current}px)`,
-          transition: this.state ? 'none' : '.2s'
+          transform: `translateX(${this.offset - this.width * this.mCurrent}px)`,
+          transition: this.state === 2 ? 'none' : '.2s'
         }
       }
     },
@@ -63,7 +75,10 @@
         }
       },
       onTouchStart(e) {
-        if (this.total > 0) {
+        if (this.total === undefined) {
+          this.mTotal = this.$el.children[0].children.length;
+        }
+        if (this.mTotal > 0) {
           this.state = 1;
           this.downPoint = this.getPoint(e);
           this.downPoint.time = new Date().getTime();
@@ -82,8 +97,8 @@
           e.preventDefault();
           const point = this.getPoint(e);
           this.offset = point.x - this.downPoint.x;
-          if (this.current === 0 && point.x > this.downPoint.x ||
-            this.current === this.total - 1 && point.x < this.downPoint.x) {
+          if (this.mCurrent === 0 && point.x > this.downPoint.x ||
+            this.mCurrent === this.mTotal - 1 && point.x < this.downPoint.x) {
             this.offset /= 3;
           }
         }
@@ -92,11 +107,11 @@
         if (this.state === 2) {
           this.state = 0;
           const speed = this.offset / (new Date().getTime() - this.downPoint.time);
-          if (this.current > 0 && (speed > 0.4 || this.offset > this.width / 2)) {
-            this.$emit('update:current', this.current - 1)
+          if (this.mCurrent > 0 && (speed > 0.4 || this.offset > this.width / 2)) {
+            this.mCurrent--;
           }
-          if (this.current < this.total - 1 && (speed < -0.4 || this.offset < this.width / -2)) {
-            this.$emit('update:current', this.current + 1)
+          if (this.mCurrent < this.mTotal - 1 && (speed < -0.4 || this.offset < this.width / -2)) {
+            this.mCurrent++;
           }
           this.offset = 0;
         }
@@ -115,8 +130,9 @@
 
 <style lang="stylus" scoped>
   .view-pager {
+    position relative
     overflow hidden
-    > div {
+    > .view-pager-wrapper {
       display flex
       align-items flex-start
       > * {

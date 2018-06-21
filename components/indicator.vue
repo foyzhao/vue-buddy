@@ -1,9 +1,8 @@
 <template>
   <ul class="indicator">
     <li v-for="i in total"
-        v-text="number ? i : ''"
         :class="{active: current === i - 1}"
-        :style="[itemStyle, current === i - 1 && activeStyle]"
+        :style="itemStyle"
         :key="i"></li>
   </ul>
 </template>
@@ -13,26 +12,11 @@
     props: {
       current: Number,
       total: Number,
-      number: Boolean,
-      color: {
-        type: String,
-        default: '#fff'
-      },
-      activeColor: {
-        type: String,
-        default: '#000'
-      }
+      color: String,
     },
     computed: {
       itemStyle() {
-        return {
-          color: this.color,
-          borderColor: this.color
-        }
-      },
-      activeStyle() {
-        return {
-          color: this.activeColor,
+        return this.color && {
           backgroundColor: this.color
         }
       }
@@ -47,17 +31,32 @@
     text-align center
     li {
       display inline-block
-      width 1rem
+      width 6px
       height @width
-      margin 0 2px
-      border 1px solid transparent
+      margin 0 (@width / 2)
       border-radius @width
-      font-size .75rem
-      line-height @width
+      background #fff
+      opacity .4
       transition .2s
-      &:empty {
-        width 4px
-        height @width
+      &.active {
+        opacity 1
+        box-shadow 1px 1px 1px rgba(0, 0, 0, .2)
+      }
+    }
+    &.dashed {
+      li {
+        height 2px
+        border-radius 0
+      }
+    }
+    &.divider {
+      display flex
+      padding 0
+      li {
+        flex 1 0 0
+        height 2px
+        margin 0
+        border-radius 0
       }
     }
   }

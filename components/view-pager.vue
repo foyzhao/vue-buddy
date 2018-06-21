@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <div class="cover">
-      <slot name="cover"></slot>
+      <slot name="cover" :current="mCurrent" :total="mTotal"></slot>
     </div>
   </div>
 </template>

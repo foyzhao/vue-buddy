@@ -16,9 +16,8 @@
         type: Number,
         default: 0
       },
-      total: {
-        type: Number
-      }
+      total: Number,
+      interval: Number
     },
     data() {
       return {
@@ -42,6 +41,7 @@
           this.mTotal = this.$el.children[0].children.length;
         });
       }
+      this.setInterval();
     },
     watch: {
       current(value, oldValue) {
@@ -77,6 +77,7 @@
         }
       },
       onTouchStart(e) {
+        this.clearInterval();
         if (this.total === undefined) {
           this.mTotal = this.$el.children[0].children.length;
         }
@@ -106,6 +107,7 @@
         }
       },
       onTouchEnd() {
+        this.setInterval();
         if (this.state === 2) {
           this.state = 0;
           const speed = this.offset / (new Date().getTime() - this.downPoint.time);
@@ -120,9 +122,25 @@
       },
       onResize() {
         this.width = this.$el.clientWidth;
+      },
+      setInterval() {
+        if (this.interval > 0) {
+          this.timer = setInterval(() => {
+            if (this.mCurrent < this.mTotal - 1) {
+              this.mCurrent++;
+            } else {
+              this.mCurrent = 0;
+            }
+          }, this.interval);
+
+        }
+      },
+      clearInterval() {
+        clearInterval(this.timer);
       }
     },
     destroyed() {
+      this.clearInterval();
       document.removeEventListener('touchmove', this.onTouchMove);
       document.removeEventListener('touchend', this.onTouchEnd);
       window.removeEventListener('resize', this.onResize);

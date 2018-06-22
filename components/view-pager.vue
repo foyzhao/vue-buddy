@@ -77,7 +77,6 @@
         }
       },
       onTouchStart(e) {
-        this.clearInterval();
         if (this.total === undefined) {
           this.mTotal = this.$el.children[0].children.length;
         }
@@ -93,6 +92,7 @@
           if (Math.abs(point.x - this.downPoint.x) > Math.abs(point.y - this.downPoint.y)) {
             e.preventDefault();
             this.state = 2;
+            this.clearInterval();
           } else {
             this.state = 0;
           }
@@ -107,7 +107,6 @@
         }
       },
       onTouchEnd() {
-        this.setInterval();
         if (this.state === 2) {
           this.state = 0;
           const speed = this.offset / (new Date().getTime() - this.downPoint.time);
@@ -118,6 +117,7 @@
             this.mCurrent++;
           }
           this.offset = 0;
+          this.setInterval();
         }
       },
       onResize() {

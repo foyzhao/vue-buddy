@@ -3,6 +3,7 @@ import ViewPager from './components/view-pager.vue'
 import Indicator from './components/indicator.vue'
 import Notify from './plugins/notify'
 import Toast from './plugins/toast'
+import PageEnd from './mixins/page-end'
 
 function install(Vue) {
   Vue.component('KeepBack', KeepBack);
@@ -15,5 +16,6 @@ function install(Vue) {
 export {
   Notify,
   Toast,
+  PageEnd,
   install as default
 }

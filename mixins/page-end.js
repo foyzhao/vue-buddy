@@ -5,11 +5,14 @@ export default {
   created() {
     if (this.$options.onPageEnd) {
       this.$onPageEnd = this.$options.onPageEnd.bind(this);
+      window.addEventListener('scroll', this.$scrollListener);
+      this.$scrollListener.binded = true;
     }
   },
   activated() {
-    if (this.$onPageEnd) {
+    if (this.$onPageEnd && !this.$scrollListener.binded) {
       window.addEventListener('scroll', this.$scrollListener);
+      this.$scrollListener.binded = true;
     }
   },
   methods: {
@@ -22,9 +25,15 @@ export default {
     }
   },
   deactivated() {
-    window.removeEventListener('scroll', this.$scrollListener);
+    if (this.$onPageEnd && this.$scrollListener.binded) {
+      window.removeEventListener('scroll', this.$scrollListener);
+      this.$scrollListener.binded = false;
+    }
   },
   destroyed() {
-    window.removeEventListener('scroll', this.$scrollListener);
+    if (this.$onPageEnd && this.$scrollListener.binded) {
+      window.removeEventListener('scroll', this.$scrollListener);
+      this.$scrollListener.binded = false;
+    }
   }
 }

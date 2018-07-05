@@ -204,10 +204,10 @@
 
 <style lang="stylus">
   .wheel {
-    -webkit-tap-highlight-color transparent
     position relative
     height 200px
     overflow hidden
+    -webkit-tap-highlight-color transparent
     li {
       display flex
       align-items center

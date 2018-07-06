@@ -217,8 +217,8 @@
       position absolute
       left 0
       top 0
-      width 100%
-      height 100%
+      right 0
+      bottom 0
       background linear-gradient(#eee, transparent, #eee)
     }
     .indicator {
@@ -226,7 +226,7 @@
       background alpha(#000, .1)
     }
     &.horizontal {
-      height 50px
+      height 40px
       ul {
         display flex
         height 100%

@@ -1,19 +1,18 @@
 <template>
   <section :class="['wheel', {horizontal}]"
            @touchstart="onTouchStart"
-           @click="onClick"
            v-if="items && items.length">
-    <ul :style="itemsStyle">
+    <ul class="wheel-content" :style="contentStyle">
       <li v-for="(item, index) in items"
-          :class="['item', {active: state !== 2 && current === index}]"
-          :style="itemStyle">
+          :class="['wheel-item', {active: state !== 2 && current === index}]"
+          :style="itemStyle"
+          @click="current = index">
         <slot :item="item">{{item}}</slot>
       </li>
     </ul>
-    <div class="shade"/>
-    <div class="indicator"
-         :style="indicatorStyle"
-         v-if="indicator"/>
+    <div class="wheel-shade"/>
+    <div class="wheel-indicator"
+         :style="indicatorStyle"/>
   </section>
 </template>
 
@@ -21,9 +20,8 @@
   export default {
     props: {
       items: Array,
-      value: {},
+      value: [String, Number, Object],
       horizontal: Boolean,
-      indicator: Boolean,
       spread: {
         type: Number,
         default: 2
@@ -48,10 +46,10 @@
     },
     computed: {
       itemWidth() {
-        return this.width / (this.spread * 2 + 1)
+        return this.width / (Math.max(this.spread, 0) * 2 + 1)
       },
       itemHeight() {
-        return this.height / (this.spread * 2 + 1)
+        return this.height / (Math.max(this.spread, 0) * 2 + 1)
       },
       itemSize() {
         return this.horizontal ? this.itemWidth : this.itemHeight
@@ -67,15 +65,19 @@
           }
         }
       },
-      itemsStyle() {
+      contentStyle() {
         if (this.horizontal) {
+          const translateX = this.offset - this.width - this.itemWidth * (this.current - Math.max(this.spread, 0));
           return {
-            transform: `translateX(${this.offset - this.itemWidth * (this.current - this.spread)}px)`,
+            padding: `0 ${this.width}px`,
+            transform: `translateX(${translateX}px)`,
             transition: this.state === 2 ? 'none' : '.2s'
           }
         } else {
+          const translateY = this.offset - this.height - this.itemHeight * (this.current - Math.max(this.spread, 0));
           return {
-            transform: `translateY(${this.offset - this.itemHeight * (this.current - this.spread)}px)`,
+            padding: `${this.height}px 0`,
+            transform: `translateY(${translateY}px)`,
             transition: this.state === 2 ? 'none' : '.2s'
           }
         }
@@ -96,6 +98,9 @@
             height: `${this.itemHeight}px`
           }
         }
+      },
+      maxOverScroll() {
+        return (this.horizontal ? this.width : this.height) / 2
       }
     },
     watch: {
@@ -130,6 +135,7 @@
         this.state = 1;
         this.pending = this.offset;
         this.downPoint = this.getPoint(e);
+        this.movePoints = [this.downPoint];
       },
       onTouchMove(e) {
         if (this.state === 1) {
@@ -146,21 +152,27 @@
           const point = this.getPoint(e);
           this.distance = this.horizontal ? point.x - this.downPoint.x : point.y - this.downPoint.y;
           this.scroll(this.pending + this.distance);
+          this.movePoints.push(point);
+          if (this.movePoints.length > 4) {
+            this.movePoints.shift()
+          }
         }
       },
       onTouchEnd() {
         if (this.state === 2) {
           this.pending += this.distance;
-          this.slideDistance = this.distance / (new Date().getTime() - this.downPoint.time) * 200;
-          requestAnimationFrame(this.slide);
+          if (this.movePoints.length > 2) {
+            const start = this.movePoints.shift();
+            const end = this.movePoints.pop();
+            const distance = this.horizontal ? end.x - start.x : end.y - start.y;
+            this.slideDistance = distance / (end.time - start.time) * 200;
+            requestAnimationFrame(this.slide);
+          } else {
+            this.adjust();
+          }
         } else {
           this.state = 0;
         }
-      },
-      onClick(e) {
-        const length = this.horizontal ? e.layerX : e.layerY;
-        const count = parseInt(length / this.itemSize) - this.spread;
-        this.current = Math.min(this.items.length - 1, Math.max(this.current + count, 0));
       },
       slide() {
         let step = this.slideDistance / 16;
@@ -168,8 +180,8 @@
         this.pending += step;
         this.scroll(this.pending);
         if (Math.abs(this.slideDistance) < 10 ||
-          this.offset > this.current * this.itemSize + 20 ||
-          this.offset < (this.current - this.items.length + 1) * this.itemSize - 20
+          this.offset > this.current * this.itemSize + this.maxOverScroll / 4 ||
+          this.offset < (this.current - this.items.length + 1) * this.itemSize - this.maxOverScroll / 4
         ) {
           this.adjust();
         } else if (this.state === 2) {
@@ -180,9 +192,9 @@
         const startRemain = this.current * this.itemSize;
         const endRemain = (this.current - this.items.length + 1) * this.itemSize;
         if (offset > startRemain) {
-          offset = startRemain + Math.tanh((offset - startRemain) / 400) * 100
+          offset = startRemain + Math.tanh((offset - startRemain) / 400) * this.maxOverScroll
         } else if (offset < endRemain) {
-          offset = endRemain + Math.tanh((offset - endRemain) / 400) * 100
+          offset = endRemain + Math.tanh((offset - endRemain) / 400) * this.maxOverScroll
         }
         this.offset = offset;
       },
@@ -208,33 +220,40 @@
     height 200px
     overflow hidden
     -webkit-tap-highlight-color transparent
-    li {
-      display flex
-      align-items center
-      justify-content center
+    > .wheel-content {
+      font-size inherit
+      > .wheel-item {
+        display flex
+        align-items center
+        justify-content center
+        font-size inherit
+      }
     }
-    .shade {
+    > .wheel-shade {
       position absolute
       left 0
       top 0
       right 0
       bottom 0
       background linear-gradient(#eee, transparent, #eee)
+      pointer-events none
     }
-    .indicator {
+    > .wheel-indicator {
       position absolute
       background alpha(#000, .1)
     }
     &.horizontal {
       height 40px
-      ul {
-        display flex
+      > .wheel-content {
+        display table
         height 100%
-        li {
-          flex 0 0 auto
+        white-space nowrap
+        > .wheel-item {
+          display inline-flex
+          height 100%
         }
       }
-      .shade {
+      > .wheel-shade {
         background linear-gradient(to right, #eee, transparent, #eee)
       }
     }

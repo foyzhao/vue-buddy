@@ -1,7 +1,5 @@
 <template>
-  <section :class="['wheel', {horizontal}]"
-           @touchstart="onTouchStart"
-           v-if="items && items.length">
+  <section :class="['wheel', {horizontal}]" @touchstart="onTouchStart">
     <ul class="wheel-content" :style="contentStyle">
       <li v-for="(item, index) in items"
           :class="['wheel-item', {active: state !== 2 && current === index}]"
@@ -13,8 +11,7 @@
       </li>
     </ul>
     <div class="wheel-shade"/>
-    <div class="wheel-indicator"
-         :style="indicatorStyle"/>
+    <div class="wheel-indicator" :style="indicatorStyle"/>
   </section>
 </template>
 
@@ -230,7 +227,7 @@
         align-items center
         justify-content center
         font-size inherit
-        span {
+        > * {
           white-space nowrap
           overflow hidden
           text-overflow ellipsis

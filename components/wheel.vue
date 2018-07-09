@@ -7,7 +7,9 @@
           :class="['wheel-item', {active: state !== 2 && current === index}]"
           :style="itemStyle"
           @click="current = index">
-        <slot :item="item">{{item}}</slot>
+        <slot :item="item">
+          <span>{{item}}</span>
+        </slot>
       </li>
     </ul>
     <div class="wheel-shade"/>
@@ -112,7 +114,8 @@
       },
       current(current) {
         if (current > -1) {
-          this.$emit('input', this.items[current])
+          this.$emit('input', this.items[current]);
+          this.$emit('change');
         }
       }
     },
@@ -189,7 +192,7 @@
         }
       },
       scroll(offset) {
-        const startRemain = this.current * this.itemSize;
+        const startRemain = Math.max(this.current * this.itemSize, 0);
         const endRemain = (this.current - this.items.length + 1) * this.itemSize;
         if (offset > startRemain) {
           offset = startRemain + Math.tanh((offset - startRemain) / 400) * this.maxOverScroll
@@ -217,7 +220,7 @@
 <style lang="stylus">
   .wheel {
     position relative
-    height 200px
+    height 168px
     overflow hidden
     -webkit-tap-highlight-color transparent
     > .wheel-content {
@@ -227,6 +230,11 @@
         align-items center
         justify-content center
         font-size inherit
+        span {
+          white-space nowrap
+          overflow hidden
+          text-overflow ellipsis
+        }
       }
     }
     > .wheel-shade {
@@ -235,12 +243,12 @@
       top 0
       right 0
       bottom 0
-      background linear-gradient(#eee, transparent, #eee)
+      background linear-gradient(alpha(#fff, .5), alpha(#fff, 0), alpha(#fff, .5))
       pointer-events none
     }
     > .wheel-indicator {
       position absolute
-      background alpha(#000, .1)
+      background alpha(#888, .1)
     }
     &.horizontal {
       height 40px
@@ -254,7 +262,7 @@
         }
       }
       > .wheel-shade {
-        background linear-gradient(to right, #eee, transparent, #eee)
+        background linear-gradient(alpha(#fff, .5), alpha(#fff, 0), alpha(#fff, .5))
       }
     }
   }

@@ -220,7 +220,7 @@
 <style lang="stylus">
   .wheel {
     position relative
-    height 168px
+    height 200px
     overflow hidden
     -webkit-tap-highlight-color transparent
     > .wheel-content {

@@ -11,7 +11,9 @@
       </li>
     </ul>
     <div class="wheel-shade"/>
-    <div class="wheel-indicator" :style="indicatorStyle"/>
+    <div class="wheel-indicator"
+         :style="indicatorStyle"
+         v-show="items && items.length"/>
   </section>
 </template>
 
@@ -132,10 +134,12 @@
         }
       },
       onTouchStart(e) {
-        this.state = 1;
-        this.pending = this.offset;
-        this.downPoint = this.getPoint(e);
-        this.movePoints = [this.downPoint];
+        if (this.items && this.items.length) {
+          this.state = 1;
+          this.pending = this.offset;
+          this.downPoint = this.getPoint(e);
+          this.movePoints = [this.downPoint];
+        }
       },
       onTouchMove(e) {
         if (this.state === 1) {

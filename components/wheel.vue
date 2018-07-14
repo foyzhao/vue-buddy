@@ -72,14 +72,14 @@
           return {
             padding: `0 ${this.width}px`,
             transform: `translateX(${translateX}px)`,
-            transition: this.state === 2 ? 'none' : '.2s'
+            transition: this.state < 3 ? 'none' : '.2s'
           }
         } else {
           const translateY = this.offset - this.height - this.itemHeight * (this.current - Math.max(this.spread, 0));
           return {
             padding: `${this.height}px 0`,
             transform: `translateY(${translateY}px)`,
-            transition: this.state === 2 ? 'none' : '.2s'
+            transition: this.state < 3 ? 'none' : '.2s'
           }
         }
       },
@@ -134,6 +134,9 @@
         }
       },
       onTouchStart(e) {
+        if (e.touches.length > 1) {
+          return
+        }
         if (this.items && this.items.length) {
           this.state = 1;
           this.pending = this.offset;
@@ -162,14 +165,17 @@
           }
         }
       },
-      onTouchEnd() {
+      onTouchEnd(e) {
+        if (e.touches.length) {
+          return
+        }
         if (this.state === 2) {
           this.pending += this.distance;
           if (this.movePoints.length > 2) {
             const start = this.movePoints.shift();
             const end = this.movePoints.pop();
             const distance = this.horizontal ? end.x - start.x : end.y - start.y;
-            this.slideDistance = distance / (end.time - start.time) * 200;
+            this.slideDistance = distance / (end.time - start.time) * 160;
             requestAnimationFrame(this.slide);
           } else {
             this.adjust();
@@ -184,8 +190,8 @@
         this.pending += step;
         this.scroll(this.pending);
         if (Math.abs(this.slideDistance) < 10 ||
-          this.offset > this.current * this.itemSize + this.maxOverScroll / 4 ||
-          this.offset < (this.current - this.items.length + 1) * this.itemSize - this.maxOverScroll / 4
+          this.offset > (this.current + 0.5) * this.itemSize ||
+          this.offset < (this.current - this.items.length + 0.5) * this.itemSize
         ) {
           this.adjust();
         } else if (this.state === 2) {
@@ -207,7 +213,7 @@
         this.current = Math.min(this.items.length - 1, Math.max(this.current - count, 0));
         this.pending = 0;
         this.offset = 0;
-        this.state = 0;
+        this.state = 3;
       }
     },
     destroyed() {

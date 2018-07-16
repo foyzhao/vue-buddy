@@ -33,7 +33,7 @@
         current: this.items ? this.items.indexOf(this.value) : -1,
         width: 0,
         height: 0,
-        state: 0,
+        state: 3,
         offset: 0
       }
     },
@@ -72,14 +72,14 @@
           return {
             padding: `0 ${this.width}px`,
             transform: `translateX(${translateX}px)`,
-            transition: this.state < 3 ? 'none' : '.2s'
+            transition: this.state > 1 ? 'none' : '.2s'
           }
         } else {
           const translateY = this.offset - this.height - this.itemHeight * (this.current - Math.max(this.spread, 0));
           return {
             padding: `${this.height}px 0`,
             transform: `translateY(${translateY}px)`,
-            transition: this.state < 3 ? 'none' : '.2s'
+            transition: this.state > 1 ? 'none' : '.2s'
           }
         }
       },
@@ -213,7 +213,7 @@
         this.current = Math.min(this.items.length - 1, Math.max(this.current - count, 0));
         this.pending = 0;
         this.offset = 0;
-        this.state = 3;
+        this.state = 0;
       }
     },
     destroyed() {

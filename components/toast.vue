@@ -1,7 +1,7 @@
 <template>
   <transition>
     <div class="toast-wrapper" v-if="queue.length">
-      <p class="toast">{{queue[0]}}</p>
+      <p class="toast" v-html="queue[0]"/>
     </div>
   </transition>
 </template>

@@ -29,7 +29,7 @@ export const dateFormatter = function (value, pattern = 'yyyy-MM-dd') {
     return value
   }
   if (typeof value === 'string') {
-    value = new Date(value)
+    value = new Date(value.replace(/-/g, '/'))
   }
   return formatDate(value, pattern)
 };

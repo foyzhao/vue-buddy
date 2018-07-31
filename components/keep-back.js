@@ -2,8 +2,11 @@ export default {
   name: 'keep-back',
   abstract: true,
   created() {
-    this.keys = [history.state.key];
+    this.keys = [];
     this.cache = {};
+    if (history.state && history.state.key) {
+      this.keys.push(history.state.key)
+    }
   },
   render() {
     const slots = this.$slots.default;
@@ -18,7 +21,7 @@ export default {
         break;
       }
     }
-    if (vNode && vNode.componentOptions && this.$route) {
+    if (vNode && vNode.componentOptions && this.$route && history.state && history.state.key) {
       const key = history.state.key + '-' + vNode.tag;
       if (this.cache[key]) {
         vNode.componentInstance = this.cache[key].componentInstance;
@@ -41,6 +44,9 @@ export default {
   },
   watch: {
     $route(to, from) {
+      if (!history.state || !history.state.key) {
+        return
+      }
       const key = history.state.key;
       const index = this.keys.indexOf(key);
       if (index >= 0) {

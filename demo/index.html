@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <style>
+    .page {
+      height: 400px;
+      line-height: 400px;
+      text-align: center;
+      background: #eee;
+    }
+    .page:nth-child(2n) {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <view-pager>
+      <div class="page">page 1</div>
+      <div class="page">page 2</div>
+      <div class="page">page 3</div>
+      <div class="page">page 4</div>
+    </view-pager>
+  </div>
+  <script src="//cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+  <script src="../dist/vue-buddy.js"></script>
+  <script>
+    Vue.use(VueBuddy);
+    new Vue({
+      el: '#app',
+      created() {
+        this.$toast('created')
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "vue-buddy",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "A component library for Vue.js",
   "author": "Foy",
   "license": "MIT",
@@ -10,14 +10,31 @@
     "component",
     "library"
   ],
+  "files": [
+    "dist",
+    "types"
+  ],
+  "main": "dist/vue-buddy.js",
+  "typings": "types/index.d.ts",
   "scripts": {
     "build": "webpack"
   },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.21.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0"
+  },
   "peerDependencies": {
     "vue": "^2.5.16"
-  },
-  "devDependencies": {
-    "vue": "^2.5.16"
-  },
-  "dependencies": {}
+  }
 }

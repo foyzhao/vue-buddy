@@ -23,8 +23,6 @@ function install(Vue) {
   Vue.filter('date', dateUtil.formatDate);
 }
 
-export default install;
-
 export {
   IndicatorComponent,
   KeepBackComponent,
@@ -32,7 +30,8 @@ export {
   WheelComponent,
   NotifyPlugin,
   ToastPlugin,
-  PageEndMixin
+  PageEndMixin,
+  install
 };
 
 export const Util = {

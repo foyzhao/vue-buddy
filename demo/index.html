@@ -5,34 +5,56 @@
   <title>demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <style>
-    .page {
-      height: 400px;
-      line-height: 400px;
-      text-align: center;
-      background: #eee;
-    }
-    .page:nth-child(2n) {
-      background: #ddd;
-    }
+    .page { line-height: 160px; text-align: center; background: #eee; }
+    .page:nth-child(2n) { background: #ddd; }
   </style>
 </head>
 <body>
   <div id="app">
     <view-pager>
-      <div class="page">page 1</div>
-      <div class="page">page 2</div>
-      <div class="page">page 3</div>
-      <div class="page">page 4</div>
+      <div class="page">page A</div>
+      <div class="page">page B</div>
+      <div class="page">page C</div>
+      <div class="page">page D</div>
+      <indicator slot="cover" slot-scope="scope" v-bind="scope"></indicator>
     </view-pager>
+
+    <wheel :items="wheelItems" v-model="wheelValue" horizontal></wheel>
+
+    <wheel :items="wheelItems" v-model="wheelValue">
+      <span slot-scope="{item}">Item {{item}}</span>
+    </wheel>
+
+    <button @click="$notify('notify a message')">notify</button>
+    <button @click="$notifySuccess('notify a success message')">notify success</button>
+    <button @click="$notifyError('notify a error message')">notify error</button>
+    <button @click="$toast('toast a message')">toast</button>
+
+    <p>Date: {{now | date}}</p>
+    <p>Time: {{now | date('time')}}</p>
+    <p>Datetime: {{now | date('datetime')}}</p>
+    <p>Week: {{now | date('EEE')}}</p>
+    <p>Date: {{now | date('yyyy-MM-dd HH:mm:ss:S EE')}}</p>
+    <p>UrlParams: {{urlParams}}</p>
+    <p>UUID: {{uuid}}</p>
   </div>
+
   <script src="//cdn.bootcss.com/vue/2.5.16/vue.js"></script>
   <script src="../dist/vue-buddy.js"></script>
   <script>
     Vue.use(VueBuddy);
     new Vue({
+      mixins: [VueBuddy.PageEndMixin],
       el: '#app',
-      created() {
-        this.$toast('created')
+      data: {
+        wheelItems: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+        wheelValue: 'A',
+        now: new Date(),
+        urlParams: VueBuddy.Util.getUrlParams(),
+        uuid: VueBuddy.Util.getUUID(),
+      },
+      onPageEnd() {
+        this.$toast('The end')
       }
     })
   </script>

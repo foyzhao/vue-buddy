@@ -1,62 +1,53 @@
 <template>
-  <ul class="indicator">
-    <li v-for="i in total"
-        :class="{active: current === i - 1}"
-        :style="itemStyle"
-        :key="i"></li>
+  <ul class="indicator" :class="type">
+    <li class="item" v-for="i in number" :key="i" :class="{current: current === i - 1}"/>
   </ul>
 </template>
 
 <script>
   export default {
     props: {
-      current: Number,
-      total: Number,
-      color: String,
-    },
-    computed: {
-      itemStyle() {
-        return this.color && {
-          backgroundColor: this.color
-        }
+      type: String,
+      number: Number,
+      current: {
+        type: Number,
+        default: 0
       }
     }
   }
 </script>
 
-<style lang="stylus">
+<style>
   .indicator {
-    padding 8px
-    line-height 0
-    text-align center
-    li {
-      display inline-block
-      width 6px
-      height @width
-      margin 0 (@width / 2)
-      border-radius @width
-      background #fff
-      opacity .4
-      transition .2s
-      &.active {
-        opacity 1
-        box-shadow 1px 1px 1px rgba(0, 0, 0, .2)
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    text-align: center;
+    & > .item {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+      border-radius: 4px;
+      background: #000;
+      vertical-align: middle;
+      opacity: .4;
+      transition: .2s;
+      &.current {
+        opacity: 1;
       }
     }
-    &.dashed {
-      li {
-        height 2px
-        border-radius 0
-      }
+    &.dashed > .item {
+      height: 3px;
+      border-radius: 0;
     }
     &.divider {
-      display flex
-      padding 0
-      li {
-        flex 1 0 0
-        height 2px
-        margin 0
-        border-radius 0
+      display: flex;
+      & > .item {
+        flex: 1 0 0;
+        height: 2px;
+        margin: 0;
+        border-radius: 0;
       }
     }
   }

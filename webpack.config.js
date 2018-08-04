@@ -1,6 +1,8 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
+const postcssPresetEnv = require('postcss-preset-env');
+const cssnano = require('cssnano');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -28,11 +30,23 @@ module.exports = {
         use: 'vue-loader'
       },
       {
-        test: /\.styl(us)?$/,
+        test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader',
-          'stylus-loader'
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                postcssPresetEnv({
+                  features: {
+                    'nesting-rules': true
+                  }
+                }),
+                cssnano()
+              ]
+            }
+          }
         ]
       }
     ]

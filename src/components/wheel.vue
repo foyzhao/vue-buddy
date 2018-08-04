@@ -1,8 +1,10 @@
 <template>
-  <section :class="['wheel', {horizontal}]" @touchstart="onTouchStart">
-    <ul class="wheel-content" :style="contentStyle">
-      <li v-for="(item, index) in items"
-          :class="['wheel-item', {active: state !== 2 && current === index}]"
+  <div class="wheel" :class="{horizontal}" @touchstart="onTouchStart">
+    <ul class="wheel-list" :style="listStyle">
+      <li class="wheel-item"
+          v-for="(item, index) in items"
+          :key="item"
+          :class="{current: state !== 2 && current === index}"
           :style="itemStyle"
           @click="current = index">
         <slot :item="item">
@@ -10,11 +12,9 @@
         </slot>
       </li>
     </ul>
-    <div class="wheel-shade"/>
-    <div class="wheel-indicator"
-         :style="indicatorStyle"
-         v-show="items && items.length"/>
-  </section>
+    <div class="wheel-cover"/>
+    <div class="wheel-indicator" :style="indicatorStyle"/>
+  </div>
 </template>
 
 <script>
@@ -33,14 +33,14 @@
         current: this.items ? this.items.indexOf(this.value) : -1,
         width: 0,
         height: 0,
-        state: 3,
-        offset: 0
+        offset: 0,
+        state: 3
       }
     },
     created() {
       document.addEventListener('touchmove', this.onTouchMove, {passive: false});
       document.addEventListener('touchend', this.onTouchEnd);
-      window.addEventListener('resize', this.measure);
+      window.addEventListener('resize', this.measure)
     },
     mounted() {
       this.measure()
@@ -66,7 +66,7 @@
           }
         }
       },
-      contentStyle() {
+      listStyle() {
         if (this.horizontal) {
           const translateX = this.offset - this.width - this.itemWidth * (this.current - Math.max(this.spread, 0));
           return {
@@ -114,16 +114,16 @@
       current(current) {
         if (current > -1) {
           this.$emit('input', this.items[current]);
-          this.$emit('change');
+          this.$emit('change')
         }
       }
     },
     methods: {
       measure() {
         if (this.horizontal) {
-          this.width = this.$el.clientWidth;
+          this.width = this.$el.clientWidth
         } else {
-          this.height = this.$el.clientHeight;
+          this.height = this.$el.clientHeight
         }
       },
       getPoint(e) {
@@ -141,7 +141,7 @@
           this.state = 1;
           this.pending = this.offset;
           this.downPoint = this.getPoint(e);
-          this.movePoints = [this.downPoint];
+          this.movePoints = [this.downPoint]
         }
       },
       onTouchMove(e) {
@@ -150,9 +150,9 @@
           const slope = Math.abs(point.x - this.downPoint.x) / Math.abs(point.y - this.downPoint.y);
           if (this.horizontal && slope > 1 || !this.horizontal && slope < 1) {
             e.preventDefault();
-            this.state = 2;
+            this.state = 2
           } else {
-            this.state = 0;
+            this.state = 0
           }
         } else if (this.state === 2) {
           e.preventDefault();
@@ -176,12 +176,12 @@
             const end = this.movePoints.pop();
             const distance = this.horizontal ? end.x - start.x : end.y - start.y;
             this.slideDistance = distance / (end.time - start.time) * 160;
-            requestAnimationFrame(this.slide);
+            requestAnimationFrame(this.slide)
           } else {
-            this.adjust();
+            this.adjust()
           }
         } else {
-          this.state = 0;
+          this.state = 0
         }
       },
       slide() {
@@ -193,7 +193,7 @@
           this.offset > (this.current + 0.5) * this.itemSize ||
           this.offset < (this.current - this.items.length + 0.5) * this.itemSize
         ) {
-          this.adjust();
+          this.adjust()
         } else if (this.state === 2) {
           requestAnimationFrame(this.slide)
         }
@@ -206,70 +206,76 @@
         } else if (offset < endRemain) {
           offset = endRemain + Math.tanh((offset - endRemain) / 400) * this.maxOverScroll
         }
-        this.offset = offset;
+        this.offset = offset
       },
       adjust() {
         const count = Math.round(this.pending / this.itemSize);
         this.current = Math.min(this.items.length - 1, Math.max(this.current - count, 0));
-        this.pending = 0;
-        this.offset = 0;
-        this.state = 0;
+        this.pending = this.offset = this.state = 0
       }
     },
     destroyed() {
       document.removeEventListener('touchmove', this.onTouchMove);
       document.removeEventListener('touchend', this.onTouchEnd);
-      window.removeEventListener('resize', this.measure);
+      window.removeEventListener('resize', this.measure)
     }
   }
 </script>
 
-<style lang="stylus">
+<style>
   .wheel {
-    position relative
-    height 200px
-    overflow hidden
-    -webkit-tap-highlight-color transparent
-    > .wheel-content {
-      font-size inherit
-      > .wheel-item {
-        display flex
-        align-items center
-        justify-content center
-        font-size inherit
-        > * {
-          white-space nowrap
-          overflow hidden
-          text-overflow ellipsis
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    & > .wheel-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: inherit;
+      & > .wheel-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: inherit;
+        & > * {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
-    > .wheel-shade {
-      position absolute
-      left 0
-      top 0
-      right 0
-      bottom 0
-      background linear-gradient(alpha(#fff, .5), alpha(#fff, 0), alpha(#fff, .5))
-      pointer-events none
+    & > .wheel-cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(#ffffff99, #ffffff00, #ffffff99);
+      pointer-events: none;
     }
-    > .wheel-indicator {
-      position absolute
-      background alpha(#888, .1)
+    & > .wheel-indicator {
+      position: absolute;
+      box-sizing: border-box;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
     }
     &.horizontal {
-      height 40px
-      > .wheel-content {
-        display table
-        height 100%
-        white-space nowrap
-        > .wheel-item {
-          display inline-flex
-          height 100%
+      height: 40px;
+      & > .wheel-list {
+        display: table;
+        height: 100%;
+        white-space: nowrap;
+        & > .wheel-item {
+          display: inline-flex;
+          height: 100%;
         }
       }
-      > .wheel-shade {
-        background linear-gradient(alpha(#fff, .5), alpha(#fff, 0), alpha(#fff, .5))
+      & > .wheel-cover {
+        background: linear-gradient(to right, #ffffff99, #ffffff00, #ffffff99);
+      }
+      & > .wheel-indicator {
+        border: none;
       }
     }
   }

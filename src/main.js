@@ -23,6 +23,15 @@ function install(Vue) {
   Vue.filter('date', dateUtil.formatDate);
 }
 
+export default install
+
+export const Util = {
+  ...dateUtil,
+  ...uriUtil,
+  ...uuidUtil,
+  ...validateUtil
+};
+
 export {
   IndicatorComponent,
   KeepBackComponent,
@@ -32,11 +41,4 @@ export {
   ToastPlugin,
   PageEndMixin,
   install
-};
-
-export const Util = {
-  ...dateUtil,
-  ...uriUtil,
-  ...uuidUtil,
-  ...validateUtil
 };

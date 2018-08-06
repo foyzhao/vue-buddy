@@ -36,6 +36,7 @@
     text-align: center;
     & > .toast {
       display: inline-block;
+      max-width: 76%;
       padding: .5rem .8rem;
       background: #444;
       border-radius: .1rem;

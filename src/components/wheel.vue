@@ -3,7 +3,7 @@
     <ul class="wheel-list" :style="listStyle">
       <li class="wheel-item"
           v-for="(item, index) in items"
-          :key="item"
+          :key="index"
           :class="{current: state !== 2 && current === index}"
           :style="itemStyle"
           @click="current = index">

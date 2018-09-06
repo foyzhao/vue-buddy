@@ -11,6 +11,7 @@ export const DialogBoxComponent;
 export const IndicatorComponent;
 export const KeepBackComponent;
 export const LayerComponent;
+export const LoaderComponent;
 export const ViewPagerComponent;
 export const WheelComponent;
 export const ScrollDirective;

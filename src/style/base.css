@@ -17,6 +17,10 @@ ul {
   margin: 0;
   padding: 0;
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 button {
   outline: none;
   font-size: 1rem;

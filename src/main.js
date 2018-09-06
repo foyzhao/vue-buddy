@@ -6,6 +6,7 @@ import DialogBoxComponent from './components/dialog-box.vue'
 import IndicatorComponent from './components/indicator.vue'
 import KeepBackComponent from './components/keep-back.vue'
 import LayerComponent from './components/layer.vue'
+import LoaderComponent from './components/loader.vue'
 import ViewPagerComponent from './components/view-pager.vue'
 import WheelComponent from './components/wheel.vue'
 import ScrollDirective from './directives/scroll'
@@ -23,6 +24,7 @@ function install(Vue) {
   Vue.component('Indicator', IndicatorComponent);
   Vue.component('KeepBack', KeepBackComponent);
   Vue.component('Layer', LayerComponent);
+  Vue.component('Loader', LoaderComponent);
   Vue.component('ViewPager', ViewPagerComponent);
   Vue.component('Wheel', WheelComponent);
   // directive
@@ -48,6 +50,7 @@ export {
   IndicatorComponent,
   KeepBackComponent,
   LayerComponent,
+  LoaderComponent,
   ViewPagerComponent,
   WheelComponent,
   ScrollDirective,

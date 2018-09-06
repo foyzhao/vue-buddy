@@ -1,3 +1,4 @@
+import './style/base.css'
 import NotifyPlugin from './plugins/notify'
 import ToastPlugin from './plugins/toast'
 import PageEndMixin from './mixins/page-end'

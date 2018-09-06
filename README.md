@@ -1,2 +1,2 @@
 # vue-buddy
-A Component Library for Vue.js
+A Mobile Component Library for Vue.js

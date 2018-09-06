@@ -8,6 +8,8 @@
   <style>
     .page { line-height: 160px; text-align: center; background: #eee; }
     .page:nth-child(2n) { background: #ddd; }
+    .layer-content { text-align: center; line-height: 4rem; }
+    .dialog-content { margin: 0; padding: 1rem; }
   </style>
 </head>
 <body>
@@ -30,6 +32,9 @@
     <button @click="$notifySuccess('notify a success message')">notify success</button>
     <button @click="$notifyError('notify a error message')">notify error</button>
     <button @click="$toast('toast a message')">toast</button>
+    <br><br>
+    <button @click="showLayer = true">show layer</button>
+    <button @click="showDialog = true">show dialog</button>
 
     <p>Date: {{now | date}}</p>
     <p>Time: {{now | date('time')}}</p>
@@ -38,9 +43,17 @@
     <p>Date: {{now | date('yyyy-MM-dd HH:mm:ss:S EE')}}</p>
     <p>UrlParams: {{urlParams}}</p>
     <p>UUID: {{uuid}}</p>
+
+    <layer style="background: #eee" v-if="showLayer" @click="showLayer = false">
+      <div class="layer-content">click blank area to close layer</div>
+    </layer>
+
+    <dialog-box v-if="showDialog" @close="showDialog = false">
+      <p class="dialog-content">dialog content</p>
+    </dialog-box>
   </div>
 
-  <script src="//cdn.staticfile.org/vue/2.5.17/vue.js"></script>
+  <script src="https://cdn.staticfile.org/vue/2.5.17/vue.js"></script>
   <script src="../dist/vue-buddy.js"></script>
   <script>
     Vue.use(VueBuddy);
@@ -53,9 +66,11 @@
         now: new Date(),
         urlParams: VueBuddy.Util.getUrlParams(),
         uuid: VueBuddy.Util.getUUID(),
+        showLayer: false,
+        showDialog: false
       },
       onPageEnd() {
-        this.$toast('The end')
+        this.$toast('Page end')
       }
     })
   </script>

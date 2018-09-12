@@ -33,9 +33,9 @@ body,h1,h2,h3,h4,h5,h6{font-size:1rem;margin:0}h1,h2,h3,h4,h5,h6{font-weight:400
 
 .indicator{line-height:0;margin:0;padding:0;text-align:center
 }
-.indicator>.item{background:#000;border-radius:4px;display:inline-block;height:8px;margin:0 4px;opacity:.4;transition:.2s;vertical-align:middle;width:8px
+.indicator>.item{background:rgba(0,0,0,.4);border-radius:4px;display:inline-block;height:8px;margin:0 4px;transition:.2s;vertical-align:middle;width:8px
 }
-.indicator>.item.current{opacity:1
+.indicator>.item.current{background:#000
 }
 .indicator.dashed>.item{border-radius:0;height:3px
 }

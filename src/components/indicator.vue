@@ -29,12 +29,11 @@
       height: 8px;
       margin: 0 4px;
       border-radius: 4px;
-      background: #000;
+      background: #00000066;
       vertical-align: middle;
-      opacity: .4;
       transition: .2s;
       &.current {
-        opacity: 1;
+        background: #000000;
       }
     }
     &.dashed > .item {

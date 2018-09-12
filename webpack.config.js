@@ -1,9 +1,9 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const {VueLoaderPlugin} = require('vue-loader');
 const postcssPresetEnv = require('postcss-preset-env');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssnano = require('cssnano');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -27,10 +27,6 @@ module.exports = {
         include: [path.resolve(__dirname, 'src')]
       },
       {
-        test: /\.vue$/,
-        use: 'vue-loader'
-      },
-      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -50,6 +46,10 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.vue$/,
+        use: 'vue-loader'
       }
     ]
   },

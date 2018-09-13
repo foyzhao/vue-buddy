@@ -58,12 +58,15 @@
       right: .2rem;
       top: .2rem;
       z-index: 10;
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: #00000088;
-      border-radius: 1.5rem;
+      border-radius: 100%;
       text-align: center;
-      line-height: 1.5rem;
+      font-weight: bold;
       color: #fff;
     }
     & > .body {

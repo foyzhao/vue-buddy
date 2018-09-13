@@ -66,7 +66,7 @@
       background: #00000088;
       border-radius: 100%;
       text-align: center;
-      font-weight: bold;
+      line-height: 0;
       color: #fff;
     }
     & > .body {

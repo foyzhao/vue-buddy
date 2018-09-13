@@ -26,7 +26,7 @@ body,h1,h2,h3,h4,h5,h6{font-size:1rem;margin:0}h1,h2,h3,h4,h5,h6{font-weight:400
 }
 .dialog-box{background:#fff;display:flex;flex-direction:column;max-height:100%;position:relative;transition:.2s
 }
-.dialog-box>.close{align-items:center;background:rgba(0,0,0,.53333);border-radius:100%;color:#fff;display:flex;font-weight:700;height:1.6rem;justify-content:center;position:absolute;right:.2rem;text-align:center;top:.2rem;width:1.6rem;z-index:10
+.dialog-box>.close{align-items:center;background:rgba(0,0,0,.53333);border-radius:100%;color:#fff;display:flex;height:1.6rem;justify-content:center;line-height:0;position:absolute;right:.2rem;text-align:center;top:.2rem;width:1.6rem;z-index:10
 }
 .dialog-box>.body{-webkit-overflow-scrolling:touch;flex:1 1 auto;overflow:auto
 }

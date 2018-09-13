@@ -57,6 +57,7 @@
       position: absolute;
       right: .2rem;
       top: .2rem;
+      z-index: 10;
       width: 1.5rem;
       height: 1.5rem;
       background: #00000088;

@@ -28,6 +28,10 @@ button {
 input {
   outline: none;
   font-size: 1rem;
+  -webkit-appearance: none;
+}
+select {
+  -webkit-appearance: none;
 }
 a {
   color: inherit;

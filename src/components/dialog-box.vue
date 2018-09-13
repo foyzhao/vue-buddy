@@ -55,8 +55,8 @@
     transition: .2s;
     & > .close {
       position: absolute;
-      right: .2rem;
-      top: .2rem;
+      right: .4rem;
+      top: .4rem;
       z-index: 10;
       width: 1.6rem;
       height: 1.6rem;
@@ -65,7 +65,6 @@
       align-items: center;
       background: #00000088;
       border-radius: 100%;
-      text-align: center;
       line-height: 0;
       color: #fff;
     }

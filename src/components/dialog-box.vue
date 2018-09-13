@@ -2,7 +2,7 @@
   <transition>
     <layer class="dialog-wrapper" @click="close">
       <div class="dialog-box">
-        <span class="close" v-if="$listeners.close" @click="$emit('close')">✖</span>
+        <span class="close" v-if="$listeners.close" @click="$emit('close')">✕</span>
         <header class="header">
           <slot name="header"/>
         </header>

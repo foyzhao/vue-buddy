@@ -22,15 +22,25 @@ table {
   border-collapse: collapse;
 }
 button {
+  border-radius: 0;
   outline: none;
   font-size: 1rem;
+  -webkit-appearance: none;
 }
 input {
+  border-radius: 0;
   outline: none;
   font-size: 1rem;
   -webkit-appearance: none;
 }
 select {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+textarea {
+  border-radius: 0;
+  font-size: 1rem;
+  resize: none;
   -webkit-appearance: none;
 }
 a {

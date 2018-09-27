@@ -35,12 +35,15 @@ input {
 }
 select {
   border-radius: 0;
+  outline: none;
+  font-size: 1rem;
   -webkit-appearance: none;
 }
 textarea {
   border-radius: 0;
-  font-size: 1rem;
+  outline: none;
   resize: none;
+  font-size: 1rem;
   -webkit-appearance: none;
 }
 a {

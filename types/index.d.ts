@@ -4,8 +4,7 @@ export default install;
 
 export const Util;
 
-export const NotifyPlugin;
-export const ToastPlugin;
+export const Toast;
 export const PageEndMixin;
 export const DialogBoxComponent;
 export const IndicatorComponent;

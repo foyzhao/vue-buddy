@@ -1,6 +1,5 @@
 import './style/base.css'
-import NotifyPlugin from './plugins/notify'
-import ToastPlugin from './plugins/toast'
+import Toast from './plugins/toast'
 import PageEndMixin from './mixins/page-end'
 import DialogBoxComponent from './components/dialog-box.vue'
 import IndicatorComponent from './components/indicator.vue'
@@ -17,8 +16,7 @@ import * as validateUtil from './util/validate'
 
 function install(Vue) {
   // plugin
-  Vue.use(NotifyPlugin);
-  Vue.use(ToastPlugin);
+  Vue.use(Toast);
   // component
   Vue.component('DialogBox', DialogBoxComponent);
   Vue.component('Indicator', IndicatorComponent);
@@ -43,8 +41,7 @@ export const Util = {
 };
 
 export {
-  NotifyPlugin,
-  ToastPlugin,
+  Toast,
   PageEndMixin,
   DialogBoxComponent,
   IndicatorComponent,

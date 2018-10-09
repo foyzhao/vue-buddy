@@ -19,7 +19,8 @@
 <style>
   .lock {
     z-index: 999;
-    background: #00000012;
+    overflow: hidden;
+    background: #00000010;
     & > .loader {
       position: absolute;
       left: 0;

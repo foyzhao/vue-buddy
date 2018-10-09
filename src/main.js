@@ -1,4 +1,5 @@
 import './style/base.css'
+import Lock from './plugins/lock'
 import Toast from './plugins/toast'
 import PageEndMixin from './mixins/page-end'
 import DialogBoxComponent from './components/dialog-box.vue'
@@ -16,6 +17,7 @@ import * as validateUtil from './util/validate'
 
 function install(Vue) {
   // plugin
+  Vue.use(Lock);
   Vue.use(Toast);
   // component
   Vue.component('DialogBox', DialogBoxComponent);
@@ -41,6 +43,7 @@ export const Util = {
 };
 
 export {
+  Lock,
   Toast,
   PageEndMixin,
   DialogBoxComponent,

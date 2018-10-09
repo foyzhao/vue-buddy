@@ -28,6 +28,7 @@
       <span slot-scope="{item}">Item {{item}}</span>
     </wheel>
 
+    <button @click="lock">lock 3 sec</button>
     <button @click="$toast('toast a message')">toast</button>
     <br><br>
     <button @click="showLayer = true">show layer</button>
@@ -75,6 +76,12 @@
         this.$toast('Page end', 1000).then(() => {
           console.log('page end toast disappeared')
         })
+      },
+      methods: {
+        lock() {
+          this.$lock('identifier');
+          setTimeout(() => this.$unlock('identifier'), 3000)
+        }
       }
     })
   </script>

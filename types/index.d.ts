@@ -4,6 +4,7 @@ export default install;
 
 export const Util;
 
+export const Lock;
 export const Toast;
 export const PageEndMixin;
 export const DialogBoxComponent;

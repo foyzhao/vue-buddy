@@ -1,8 +1,8 @@
 <template>
   <transition>
-    <layer class="dialog-wrapper" @click="close">
+    <layer class="dialog-wrapper" @click="cancel">
       <div class="dialog-box">
-        <span class="close" v-if="$listeners.close" @click="$emit('close')">✕</span>
+        <span class="close" v-if="closeable" @click="$emit('shutdown')">✕</span>
         <header class="header">
           <slot name="header"/>
         </header>
@@ -20,12 +20,13 @@
 <script>
   export default {
     props: {
-      nailed: Boolean
+      important: Boolean,
+      closeable: Boolean
     },
     methods: {
-      close() {
-        if (!this.nailed) {
-          this.$emit('close')
+      cancel() {
+        if (!this.important) {
+          this.$emit('shutdown')
         }
       }
     }

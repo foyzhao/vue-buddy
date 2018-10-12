@@ -25,7 +25,7 @@
       display: inline-block;
       max-width: 80%;
       padding: .5rem .8rem;
-      background: #444;
+      background: #000000bd;
       border-radius: .1rem;
       word-break: break-all;
       font-size: .9rem;

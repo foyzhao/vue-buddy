@@ -1,53 +1,72 @@
 <template>
-  <transition>
-    <layer class="dialog-wrapper" @click="cancel">
-      <div class="dialog-box">
-        <span class="close" v-if="closeable" @click="$emit('shutdown')">✕</span>
-        <header class="header">
-          <slot name="header"/>
-        </header>
-        <div class="body" v-scroll.end="() => $emit('scroll-end')">
-          <slot/>
-        </div>
-        <footer class="footer">
-          <slot name="footer"/>
-        </footer>
+  <div class="dialog-wrapper" @click.self="close">
+    <div class="dialog">
+      <span class="close" v-if="closeable" @click="close">✕</span>
+      <header class="header">
+        <slot name="header"/>
+      </header>
+      <div class="body" v-scroll.end="() => $emit('scroll-end')">
+        <slot/>
       </div>
-    </layer>
-  </transition>
+      <footer class="footer">
+        <slot name="footer"/>
+      </footer>
+    </div>
+  </div>
 </template>
 
 <script>
+  import Scroll from '../directives/scroll'
+
   export default {
+    inject: {
+      closeLayer: {
+        default: null
+      }
+    },
     props: {
-      important: Boolean,
       closeable: Boolean
     },
     methods: {
-      cancel() {
-        if (!this.important) {
-          this.$emit('shutdown')
+      close() {
+        if (this.closeable) {
+          if (this.closeLayer) {
+            this.closeLayer()
+          }
+          this.$emit('close')
         }
       }
+    },
+    directives: {
+      Scroll
     }
   }
 </script>
 
 <style>
   .dialog-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #00000088;
+    overflow: hidden;
+    background: #00000080;
     transition: .2s;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
     &.v-enter, &.v-leave-to {
-      opacity: 0;
+      background: #00000000;
       & > .dialog-box {
         transform: scale(0, 0);
       }
     }
   }
-  .dialog-box {
+  .dialog {
     position: relative;
     max-height: 100%;
     display: flex;
@@ -74,5 +93,8 @@
       overflow: auto;
       -webkit-overflow-scrolling: touch;
     }
+  }
+  .v-enter > .dialog, .v-leave-to > .dialog {
+    transform: scale(0, 0);
   }
 </style>

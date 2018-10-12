@@ -8,8 +8,6 @@
   <style>
     .page { line-height: 160px; text-align: center; background: #eee; }
     .page:nth-child(2n) { background: #ddd; }
-    .layer-content { text-align: center; line-height: 4rem; }
-    .dialog-content { margin: 0; padding: 1rem; }
   </style>
 </head>
 <body>
@@ -30,9 +28,6 @@
 
     <button @click="lock">lock 3 sec</button>
     <button @click="$toast('toast a message')">toast</button>
-    <br><br>
-    <button @click="showLayer = true">show layer</button>
-    <button @click="showDialog = true">show dialog</button>
 
     <p>Loader:
       <loader></loader>
@@ -46,14 +41,6 @@
     <p>Date: {{now | date('yyyy-MM-dd HH:mm:ss:S EE')}}</p>
     <p>UrlParams: {{urlParams}}</p>
     <p>UUID: {{uuid}}</p>
-
-    <layer style="background: #eee" v-if="showLayer" @click="showLayer = false">
-      <div class="layer-content">click blank area to close layer</div>
-    </layer>
-
-    <dialog-box v-if="showDialog" @close="showDialog = false">
-      <p class="dialog-content">dialog content</p>
-    </dialog-box>
   </div>
 
   <script src="https://cdn.staticfile.org/vue/2.5.17/vue.js"></script>
@@ -68,9 +55,7 @@
         wheelValue: 'A',
         now: new Date(),
         urlParams: VueBuddy.Util.getUrlParams(),
-        uuid: VueBuddy.Util.getUUID(),
-        showLayer: false,
-        showDialog: false
+        uuid: VueBuddy.Util.getUUID()
       },
       onPageEnd() {
         this.$toast('Page end', 1000).then(() => {

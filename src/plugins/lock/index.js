@@ -1,26 +1,26 @@
-import Launcher from '../launcher'
+import Layer from '../layer'
 import Lock from './lock.vue'
 
 const identifiers = {};
-let shutdown = null;
+let close = null;
 
 function lock(identifier) {
   if (identifier && typeof identifier === 'string') {
     identifiers[identifier] = 1
   }
-  if (!shutdown) {
-    shutdown = Launcher.startup(Lock)
+  if (!close) {
+    close = Layer.open(Lock)
   }
 }
 
 function unlock(identifier) {
-  if (shutdown) {
+  if (close) {
     if (identifier && typeof identifier === 'string') {
       delete identifiers[identifier]
     }
     if (!Object.keys(identifiers).length) {
-      shutdown();
-      shutdown = null
+      close();
+      close = null
     }
   }
 }

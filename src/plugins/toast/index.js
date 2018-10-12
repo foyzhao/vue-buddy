@@ -1,12 +1,12 @@
-import Launcher from '../launcher'
+import Layer from '../layer'
 import Toast from './toast.vue'
 
 function toast(content, time = 2000) {
   return new Promise((resolve, reject) => {
     if (content && time > 0) {
-      const shutdown = Launcher.startup(Toast, {content});
+      const close = Layer.open(Toast, {content});
       setTimeout(() => {
-        shutdown();
+        close();
         resolve()
       }, time)
     } else {

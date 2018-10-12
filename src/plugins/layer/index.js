@@ -1,12 +1,18 @@
 import Vue from 'vue'
 
-function startup(component, props, listeners) {
-  let app = new Vue({
+function open(component, props, listeners) {
+  let layer = new Vue({
+    name: 'Layer',
     data: {
-      running: true
+      open: true
+    },
+    provide: {
+      closeLayer() {
+        layer = layer.open = null
+      }
     },
     render(h) {
-      if (this.running) {
+      if (this.open) {
         return h('transition', {
           props: {
             appear: true
@@ -17,12 +23,7 @@ function startup(component, props, listeners) {
         }, [
           h(component, {
             props: props,
-            on: {
-              shutdown() {
-                app = app.running = null
-              },
-              ...listeners
-            }
+            on: listeners
           })
         ])
       }
@@ -35,15 +36,15 @@ function startup(component, props, listeners) {
     }
   }).$mount();
   return function () {
-    if (app) {
-      app = app.running = null
+    if (layer) {
+      layer = layer.open = null
     }
   }
 }
 
 export default {
-  startup,
+  open,
   install(Vue) {
-    Vue.prototype.$startup = startup
+    Vue.prototype.$open = open
   }
 }

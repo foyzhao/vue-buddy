@@ -7,9 +7,7 @@ function open(component, props, listeners) {
       open: true
     },
     provide: {
-      closeLayer() {
-        layer = layer.open = null
-      }
+      closeLayer
     },
     render(h) {
       if (this.open) {
@@ -23,7 +21,10 @@ function open(component, props, listeners) {
         }, [
           h(component, {
             props: props,
-            on: listeners
+            on: {
+              close: closeLayer,
+              ...listeners
+            }
           })
         ])
       }
@@ -35,11 +36,14 @@ function open(component, props, listeners) {
       document.body.removeChild(this.$el)
     }
   }).$mount();
-  return function () {
+
+  function closeLayer() {
     if (layer) {
       layer = layer.open = null
     }
   }
+
+  return closeLayer
 }
 
 export default {

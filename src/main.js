@@ -1,4 +1,5 @@
 import './style/base.css'
+import Launcher from './plugins/launcher'
 import Lock from './plugins/lock'
 import Toast from './plugins/toast'
 import PageEndMixin from './mixins/page-end'
@@ -17,6 +18,7 @@ import * as validateUtil from './util/validate'
 
 function install(Vue) {
   // plugin
+  Vue.use(Launcher);
   Vue.use(Lock);
   Vue.use(Toast);
   // component
@@ -43,6 +45,7 @@ export const Util = {
 };
 
 export {
+  Launcher,
   Lock,
   Toast,
   PageEndMixin,

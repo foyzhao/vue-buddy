@@ -1,34 +1,26 @@
-import Vue from 'vue'
+import Launcher from '../launcher'
 import Lock from './lock.vue'
 
-let vm = null;
 const identifiers = {};
+let shutdown = null;
 
 function lock(identifier) {
   if (identifier && typeof identifier === 'string') {
     identifiers[identifier] = 1
   }
-  if (!vm) {
-    vm = new Vue({
-      extends: Lock,
-      mounted() {
-        document.body.appendChild(this.$el)
-      },
-      destroyed() {
-        document.body.removeChild(this.$el)
-      }
-    }).$mount()
+  if (!shutdown) {
+    shutdown = Launcher.startup(Lock)
   }
 }
 
 function unlock(identifier) {
-  if (vm) {
+  if (shutdown) {
     if (identifier && typeof identifier === 'string') {
       delete identifiers[identifier]
     }
     if (!Object.keys(identifiers).length) {
-      vm.$destroy();
-      vm = null
+      shutdown();
+      shutdown = null
     }
   }
 }

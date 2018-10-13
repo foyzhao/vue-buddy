@@ -61,9 +61,6 @@
     -webkit-overflow-scrolling: touch;
     &.v-enter, &.v-leave-to {
       background: #00000000;
-      & > .dialog-box {
-        transform: scale(0, 0);
-      }
     }
   }
   .dialog {

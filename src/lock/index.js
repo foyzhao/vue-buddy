@@ -1,18 +1,30 @@
 import Layer from '../layer'
-import Lock from './lock.vue'
+import Loader from '../components/loader.vue'
 
 const identifiers = {};
 let close = null;
 
+/**
+ * @method
+ * @desc lock the screen with a loader
+ * @param {string} identifier
+ */
 function lock(identifier) {
-  if (identifier && typeof identifier === 'string') {
+  if (identifier) {
     identifiers[identifier] = 1
   }
   if (!close) {
-    close = Layer.open(Lock)
+    close = Layer.open(Loader, {
+      name: 'lock-layer'
+    })
   }
 }
 
+/**
+ * @method
+ * @desc unlock the screen if there has no more identifiers
+ * @param {string} identifier
+ */
 function unlock(identifier) {
   if (close) {
     if (identifier && typeof identifier === 'string') {

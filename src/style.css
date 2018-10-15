@@ -121,24 +121,6 @@ a {
     transform: translateX(-100%);
   }
 }
-.lock-layer {
-  z-index: 999;
-  background: #00000010;
-  transition: none;
-  pointer-events: none;
-  & > .loader {
-    width: 2rem;
-    height: 2rem;
-    color: #00000090;
-  }
-}
-.toast-layer {
-  top: 50%;
-  z-index: 9999;
-  background: none;
-  transition: .4s;
-  pointer-events: none;
-}
 .toast {
   max-width: 80%;
   padding: .5rem .8rem;

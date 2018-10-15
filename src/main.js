@@ -2,14 +2,14 @@ import './style.css'
 import Layer from './layer'
 import Lock from './lock'
 import Toast from './toast'
-import PageEndMixin from './scroll/page-end.mixin'
-import DialogBoxComponent from './components/dialog-box.vue'
-import IndicatorComponent from './components/indicator.vue'
-import KeepBackComponent from './components/keep-back.vue'
-import LoaderComponent from './components/loader.vue'
-import ViewPagerComponent from './components/view-pager.vue'
-import WheelComponent from './components/wheel.vue'
-import ScrollDirective from './scroll/scroll.directive'
+import ModalDialog from './components/modal-dialog.vue'
+import Indicator from './components/indicator.vue'
+import KeepBack from './components/keep-back.vue'
+import Loader from './components/loader.vue'
+import ViewPager from './components/view-pager.vue'
+import Wheel from './components/wheel.vue'
+import ScrollEnd from './scroll-end'
+import PageEnd from './page-end'
 import * as dateUtil from './util/date'
 import * as uriUtil from './util/uri'
 import * as uuidUtil from './util/uuid'
@@ -21,14 +21,14 @@ function install(Vue) {
   Vue.use(Lock);
   Vue.use(Toast);
   // component
-  Vue.component('DialogBox', DialogBoxComponent);
-  Vue.component('Indicator', IndicatorComponent);
-  Vue.component('KeepBack', KeepBackComponent);
-  Vue.component('Loader', LoaderComponent);
-  Vue.component('ViewPager', ViewPagerComponent);
-  Vue.component('Wheel', WheelComponent);
+  Vue.component('ModalDialog', ModalDialog);
+  Vue.component('Indicator', Indicator);
+  Vue.component('KeepBack', KeepBack);
+  Vue.component('Loader', Loader);
+  Vue.component('ViewPager', ViewPager);
+  Vue.component('Wheel', Wheel);
   // directive
-  Vue.directive('scroll', ScrollDirective);
+  Vue.directive('scroll', ScrollEnd);
   // filter
   Vue.filter('date', dateUtil.formatDate);
 }
@@ -47,12 +47,13 @@ export {
   Lock,
   Toast,
   PageEndMixin,
-  DialogBoxComponent,
-  IndicatorComponent,
-  KeepBackComponent,
-  LoaderComponent,
-  ViewPagerComponent,
-  WheelComponent,
-  ScrollDirective,
+  ModalDialog,
+  Indicator,
+  KeepBack,
+  Loader,
+  ViewPager,
+  Wheel,
+  ScrollEnd,
+  PageEnd,
   install
 };

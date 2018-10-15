@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog">
+  <div class="modal-dialog">
     <!--TODO optimize style-->
     <span class="close" v-if="closeable" @click="closeLayer">✕</span>
     <header class="header">
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import Scroll from '../scroll/scroll.directive'
+  import ScrollEnd from '../scroll-end'
 
   export default {
     inject: {
@@ -27,13 +27,13 @@
       closeable: Boolean
     },
     directives: {
-      Scroll
+      scroll: ScrollEnd
     }
   }
 </script>
 
 <style>
-  .dialog {
+  .modal-dialog {
     position: relative;
     width: 86%;
     max-height: 86%;

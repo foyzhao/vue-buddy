@@ -7,7 +7,18 @@ import Vue from 'vue'
  * @param {object} options
  * @return {function} close the opened layer
  */
-function open(component, options = {}) {
+function open(component, options) {
+
+  options = Object.assign({
+    appear: 'fade-in',
+    gravity: 'center',
+    launch: 'zoom-in',
+    cancelable: true,
+    style: {},
+    props: {},
+    listeners: {}
+  }, options);
+
   let layer = new Vue({
     name: 'Layer',
     data: {
@@ -34,9 +45,9 @@ function open(component, options = {}) {
               {
                 'class': [
                   'layer',
-                  options.name,
-                  options.appear || 'fade-in',
-                  options.gravity || 'center'
+                  options.appear,
+                  options.gravity,
+                  options.name
                 ],
                 style: options.style,
                 on: {
@@ -44,7 +55,7 @@ function open(component, options = {}) {
                     if (event.target !== event.currentTarget) {
                       return
                     }
-                    if (options.cancelable !== false) {
+                    if (options.cancelable) {
                       closeLayer()
                     }
                   }
@@ -52,13 +63,13 @@ function open(component, options = {}) {
               },
               [
                 h(
-                  component.component || component,
+                  component,
                   {
-                    'class': component.appear || 'zoom-in',
-                    props: component.props,
+                    'class': options.launch,
+                    props: options.props,
                     on: {
                       close: closeLayer,
-                      ...component.listeners
+                      ...options.listeners
                     }
                   }
                 )

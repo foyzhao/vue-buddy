@@ -1,5 +1,5 @@
 <template functional>
-  <span class="loader"/>
+  <span class="loader" :class="props.size"/>
 </template>
 
 <style>
@@ -15,5 +15,9 @@
     border-top-color: #ffffff88;
     border-right-color: #ffffff88;
     animation: spin 1s infinite linear;
+    &.big {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 </style>

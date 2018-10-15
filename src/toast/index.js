@@ -13,10 +13,19 @@ function toast(message, time = 2000) {
   }
   return new Promise(resolve => {
     const close = Layer.open({
-      template: `<div class="toast">${message}</div>`,
-      appear: 'fade-in zoom-in'
+      name: 'Toast',
+      render(h) {
+        return h('div', {
+          'class': 'toast'
+        }, message)
+      }
     }, {
-      name: 'toast-layer'
+      style: {
+        top: '50%',
+        zIndex: 9999,
+        background: 'none',
+        pointerEvents: 'none'
+      }
     });
     setTimeout(() => {
       close();

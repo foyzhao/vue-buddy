@@ -15,14 +15,8 @@ function lock(identifier) {
   }
   if (!close) {
     close = Layer.open(Loader, {
-      cancelable: false,
-      style: {
-        zIndex: 999,
-        background: 'rgba(0, 0, 0, 0.1)'
-      },
-      props: {
-        size: 'big'
-      }
+      name: 'lock-layer',
+      cancelable: false
     })
   }
 }

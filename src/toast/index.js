@@ -1,36 +1,40 @@
 import Layer from '../layer'
+import Toast from './toast.vue'
 
 /**
  * @method
  * @desc show message for while
- * @param {string} message
- * @param {number} time
+ * @param {component|string} component
+ * @param {object|number} options
  * @return {Promise} will be resolved when message disappear
  */
-function toast(message, time = 2000) {
-  if (!message || time < 1) {
-    throw 'toast: invalid params'
+function toast(component, options) {
+
+  if (options && typeof options !== 'object') {
+    options = {
+      time: options
+    }
   }
+
+  options = Object.assign({
+    name: 'popup-layer',
+    gravity: 'golden',
+    time: 2000
+  }, options);
+
+  if (typeof component === 'string') {
+    options.props = {
+      message: component
+    };
+    component = Toast
+  }
+
   return new Promise(resolve => {
-    const close = Layer.open({
-      name: 'Toast',
-      render(h) {
-        return h('div', {
-          'class': 'toast'
-        }, message)
-      }
-    }, {
-      style: {
-        top: '50%',
-        zIndex: 9999,
-        background: 'none',
-        pointerEvents: 'none'
-      }
-    });
+    const close = Layer.open(component, options);
     setTimeout(() => {
       close();
       resolve()
-    }, time)
+    }, options.time)
   })
 }
 

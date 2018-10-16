@@ -46,7 +46,10 @@ module.exports = {
               plugins: [
                 postcssPresetEnv({
                   features: {
-                    'nesting-rules': true
+                    'nesting-rules': true,
+                    'custom-properties': {
+                      preserve: false
+                    }
                   }
                 }),
                 cssnano()

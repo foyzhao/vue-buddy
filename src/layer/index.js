@@ -10,9 +10,8 @@ import Vue from 'vue'
 function open(component, options) {
 
   options = Object.assign({
-    appear: 'fade-in',
     gravity: 'center',
-    launch: 'zoom-in',
+    transition: 'zoom-inner',
     cancelable: true,
     style: {},
     props: {},
@@ -33,6 +32,7 @@ function open(component, options) {
           'transition',
           {
             props: {
+              name: options.transition,
               appear: true
             },
             on: {
@@ -45,9 +45,11 @@ function open(component, options) {
               {
                 'class': [
                   'layer',
-                  options.appear,
+                  options.name,
                   options.gravity,
-                  options.name
+                  {
+                    transition: !!options.transition
+                  }
                 ],
                 style: options.style,
                 on: {
@@ -65,7 +67,6 @@ function open(component, options) {
                 h(
                   component,
                   {
-                    'class': options.launch,
                     props: options.props,
                     on: {
                       close: closeLayer,

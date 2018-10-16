@@ -24,6 +24,7 @@ function open(component, options) {
       open: true
     },
     provide: {
+      cancelable: options.cancelable,
       closeLayer
     },
     render(h) {

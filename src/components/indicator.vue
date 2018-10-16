@@ -21,15 +21,15 @@
   .indicator {
     margin: 0;
     padding: 0;
-    line-height: 0;
     text-align: center;
+    line-height: 0;
     & > .item {
       display: inline-block;
       width: 8px;
       height: 8px;
       margin: 0 4px;
-      border-radius: 4px;
       background: #00000066;
+      border-radius: 4px;
       vertical-align: middle;
       transition: .2s;
       &.current {

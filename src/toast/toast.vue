@@ -8,9 +8,9 @@
     padding: .5rem .8rem;
     background: #000000bd;
     border-radius: .1rem;
-    word-break: break-all;
     text-align: center;
     font-size: .9rem;
     color: #fff;
+    word-break: break-all;
   }
 </style>

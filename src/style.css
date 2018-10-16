@@ -62,6 +62,8 @@ a {
   bottom: 0;
   z-index: 99;
   background: #00000080;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
   /* gravity */
   &.center {

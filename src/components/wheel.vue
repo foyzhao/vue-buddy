@@ -239,8 +239,8 @@
         justify-content: center;
         font-size: inherit;
         & > * {
-          white-space: nowrap;
           overflow: hidden;
+          white-space: nowrap;
           text-overflow: ellipsis;
         }
       }

@@ -1,7 +1,6 @@
 <template>
   <div class="modal-dialog">
-    <!--TODO optimize style-->
-    <span class="close" v-if="closeable" @click="closeLayer">✕</span>
+    <span class="close" v-if="cancelable || closeable" @click="closeLayer"/>
     <header class="header">
       <slot name="header"/>
     </header>
@@ -19,6 +18,9 @@
 
   export default {
     inject: {
+      cancelable: {
+        default: true
+      },
       closeLayer: {
         default: null
       }
@@ -37,23 +39,38 @@
     position: relative;
     width: 86%;
     max-height: 86%;
+    background: #fff;
     display: flex;
     flex-direction: column;
-    background: #fff;
     & > .close {
       position: absolute;
       right: .4rem;
       top: .4rem;
       z-index: 10;
-      width: 1.6rem;
-      height: 1.6rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 1rem;
+      height: 1rem;
+      padding: 0.4rem;
       background: #00000088;
       border-radius: 100%;
-      line-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: #fff;
+      &:before, &:after {
+        width: 100%;
+        height: 0;
+        border-top-width: 2px;
+        border-top-style: solid;
+        content: '';
+      }
+      &:before {
+        transform: rotate(45deg);
+      }
+      &:after {
+        margin-top: -2px;
+        transform: rotate(-45deg);
+      }
     }
     & > .body {
       flex: 1 1 auto;

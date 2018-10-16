@@ -11,7 +11,7 @@ function open(component, options) {
 
   options = Object.assign({
     gravity: 'center',
-    transition: 'zoom-inner',
+    transition: 'v',
     cancelable: true,
     style: {},
     props: {},

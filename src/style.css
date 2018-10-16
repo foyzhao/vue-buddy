@@ -118,6 +118,14 @@ a {
       transition: inherit;
     }
   }
+  /* default transition */
+  &.v-enter, &.v-leave-to {
+    background: #00000000;
+    & > * {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
   /* fade transition */
   &.fade-enter, &.fade-leave-to {
     opacity: 0;
@@ -134,14 +142,6 @@ a {
   }
   &.slide-right-enter, &.slide-right-leave-to {
     transform: translateX(-100%);
-  }
-  /* zoom inner transition */
-  &.zoom-inner-enter, &.zoom-inner-leave-to {
-    background: #00000000;
-    & > * {
-      opacity: 0;
-      transform: scale(0);
-    }
   }
   /* slide inner transition */
   &.slide-up-inner-enter, &.slide-up-inner-leave-to {

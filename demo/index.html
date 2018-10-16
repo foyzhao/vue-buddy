@@ -28,6 +28,7 @@
 
     <button @click="lock">lock 3 sec</button>
     <button @click="$toast('toast a message')">toast</button>
+    <button @click="copyTime">copy time</button>
 
     <p>Loader:
       <loader></loader>
@@ -66,6 +67,10 @@
         lock() {
           this.$lock('identifier');
           setTimeout(() => this.$unlock('identifier'), 3000)
+        },
+        copyTime() {
+          VueBuddy.Util.copyToClipboard(new Date().toLocaleString());
+          this.$toast('copy success');
         }
       }
     })

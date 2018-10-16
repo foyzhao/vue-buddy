@@ -10,9 +10,10 @@ import ViewPager from './components/view-pager.vue'
 import Wheel from './components/wheel.vue'
 import ScrollEnd from './scroll-end'
 import PageEnd from './page-end'
-import * as dateUtil from './util/date'
 import * as uriUtil from './util/uri'
 import * as uuidUtil from './util/uuid'
+import * as dateUtil from './util/date'
+import * as stringUtil from './util/string'
 import * as validateUtil from './util/validate'
 
 function install(Vue) {
@@ -36,9 +37,10 @@ function install(Vue) {
 export default install
 
 export const Util = {
-  ...dateUtil,
   ...uriUtil,
   ...uuidUtil,
+  ...dateUtil,
+  ...stringUtil,
   ...validateUtil
 };
 

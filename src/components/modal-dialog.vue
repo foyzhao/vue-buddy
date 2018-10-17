@@ -1,6 +1,6 @@
 <template>
   <div class="modal-dialog">
-    <span class="close" v-if="cancelable || closeable" @click="closeLayer"/>
+    <span class="close" v-if="cancelable || closeable" @click="close"/>
     <header class="header">
       <slot name="header"/>
     </header>
@@ -19,7 +19,7 @@
   export default {
     inject: {
       cancelable: {
-        default: true
+        default: false
       },
       closeLayer: {
         default: null
@@ -30,6 +30,15 @@
     },
     directives: {
       scroll: ScrollEnd
+    },
+    methods: {
+      close() {
+        if (this.closeLayer) {
+          this.closeLayer()
+        } else {
+          this.$emit('close')
+        }
+      }
     }
   }
 </script>

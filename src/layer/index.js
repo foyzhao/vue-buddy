@@ -7,11 +7,11 @@ import Vue from 'vue'
  * @param {object} options
  * @return {function} close the opened layer
  */
-function open(component, options) {
+function open(component, options = {}) {
 
   options = Object.assign({
     gravity: 'center',
-    transition: 'v',
+    transition: defaultTransition(options),
     cancelable: true,
     style: {},
     props: {},
@@ -96,6 +96,25 @@ function open(component, options) {
   }
 
   return closeLayer
+}
+
+function defaultTransition(options) {
+  if (options.transition || !options.gravity) {
+    return 'v'
+  }
+  if (options.gravity === 'top') {
+    return 'slide-down-inner'
+  }
+  if (options.gravity === 'bottom') {
+    return 'slide-up-inner'
+  }
+  if (options.gravity === 'left') {
+    return 'slide-right-inner'
+  }
+  if (options.gravity === 'right') {
+    return 'slide-left-inner'
+  }
+  return 'v'
 }
 
 export default {

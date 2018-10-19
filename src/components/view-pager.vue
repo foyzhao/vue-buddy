@@ -164,5 +164,8 @@
       bottom: 10%;
       width: 100%;
     }
+    & > .indicator.divider {
+      bottom: 0;
+    }
   }
 </style>

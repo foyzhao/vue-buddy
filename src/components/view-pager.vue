@@ -27,19 +27,13 @@
         downPoint: null
       }
     },
-    created() {
-      document.addEventListener('touchmove', this.onTouchMove, {passive: false});
-      document.addEventListener('touchend', this.onTouchEnd);
-      window.addEventListener('resize', this.onResize)
-    },
-    mounted() {
-      this.onResize();
-      if (this.number === undefined) {
-        this.$nextTick(() => {
-          this.mNumber = this.$el.children[0].children.length
-        })
+    computed: {
+      viewWrapperStyle() {
+        return {
+          transform: `translateX(${this.offset - this.width * this.mCurrent}px)`,
+          transition: this.state === 2 ? 'none' : '.2s'
+        }
       }
-      this.setInterval()
     },
     watch: {
       current(value, oldValue) {
@@ -59,13 +53,25 @@
         this.$emit('update:current', value)
       }
     },
-    computed: {
-      viewWrapperStyle() {
-        return {
-          transform: `translateX(${this.offset - this.width * this.mCurrent}px)`,
-          transition: this.state === 2 ? 'none' : '.2s'
-        }
+    created() {
+      document.addEventListener('touchmove', this.onTouchMove, {passive: false});
+      document.addEventListener('touchend', this.onTouchEnd);
+      window.addEventListener('resize', this.onResize)
+    },
+    mounted() {
+      this.onResize();
+      if (this.number === undefined) {
+        this.$nextTick(() => {
+          this.mNumber = this.$el.children[0].children.length
+        })
       }
+      this.setInterval()
+    },
+    destroyed() {
+      this.clearInterval();
+      document.removeEventListener('touchmove', this.onTouchMove);
+      document.removeEventListener('touchend', this.onTouchEnd);
+      window.removeEventListener('resize', this.onResize)
     },
     methods: {
       getPoint(e) {
@@ -77,6 +83,9 @@
       onTouchStart(e) {
         if (this.number === undefined) {
           this.mNumber = this.$el.children[0].children.length
+        }
+        if (!this.width) {
+          this.onResize()
         }
         if (this.mNumber > 0) {
           this.state = 1;
@@ -134,12 +143,6 @@
       clearInterval() {
         clearInterval(this.timer)
       }
-    },
-    destroyed() {
-      this.clearInterval();
-      document.removeEventListener('touchmove', this.onTouchMove);
-      document.removeEventListener('touchend', this.onTouchEnd);
-      window.removeEventListener('resize', this.onResize)
     }
   }
 </script>

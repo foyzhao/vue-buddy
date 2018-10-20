@@ -114,14 +114,14 @@ a {
   /* transition */
   &.transition {
     transition: var(--animation-duration);
-    & > * {
+    > * {
       transition: inherit;
     }
   }
   /* default transition */
   &.v-enter, &.v-leave-to {
     background: #00000000;
-    & > * {
+    > * {
       opacity: 0;
       transform: scale(0);
     }
@@ -146,25 +146,25 @@ a {
   /* slide inner transition */
   &.slide-up-inner-enter, &.slide-up-inner-leave-to {
     background: #00000000;
-    & > * {
+    > * {
       transform: translateY(100%);
     }
   }
   &.slide-down-inner-enter, &.slide-down-inner-leave-to {
     background: #00000000;
-    & > * {
+    > * {
       transform: translateY(-100%);
     }
   }
   &.slide-left-inner-enter, &.slide-left-inner-leave-to {
     background: #00000000;
-    & > * {
+    > * {
       transform: translateX(100%);
     }
   }
   &.slide-right-inner-enter, &.slide-right-inner-leave-to {
     background: #00000000;
-    & > * {
+    > * {
       transform: translateX(-100%);
     }
   }
@@ -172,7 +172,7 @@ a {
 .lock-layer {
   z-index: 999;
   background: #00000010;
-  & > .loader {
+  > .loader {
     width: 2rem;
     height: 2rem;
   }

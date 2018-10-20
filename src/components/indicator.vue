@@ -23,7 +23,7 @@
     padding: 0;
     text-align: center;
     line-height: 0;
-    & > .item {
+    > .item {
       display: inline-block;
       width: 8px;
       height: 8px;
@@ -42,7 +42,7 @@
     }
     &.divider {
       display: flex;
-      & > .item {
+      > .item {
         flex: 1 0 0;
         height: 2px;
         margin: 0;

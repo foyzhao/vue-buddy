@@ -51,7 +51,7 @@
     background: #fff;
     display: flex;
     flex-direction: column;
-    & > .close {
+    > .close {
       position: absolute;
       right: .4rem;
       top: .4rem;
@@ -81,7 +81,7 @@
         transform: rotate(-45deg);
       }
     }
-    & > .body {
+    > .body {
       flex: 1 1 auto;
       overflow: auto;
       -webkit-overflow-scrolling: touch;

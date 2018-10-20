@@ -1,7 +1,5 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
-const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
 const devMode = process.env.NODE_ENV !== 'production';
@@ -44,15 +42,12 @@ module.exports = {
             options: {
               ident: 'postcss',
               plugins: [
-                postcssPresetEnv({
-                  features: {
-                    'nesting-rules': true,
-                    'custom-properties': {
-                      preserve: false
-                    }
-                  }
+                require('postcss-nested'),
+                require('postcss-color-hex-alpha'),
+                require('postcss-custom-properties')({
+                  preserve: false
                 }),
-                cssnano()
+                require('postcss-clean')
               ]
             }
           }

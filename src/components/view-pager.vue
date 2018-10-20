@@ -151,21 +151,21 @@
   .view-pager {
     position: relative;
     overflow: hidden;
-    & > .view-wrapper {
+    > .view-wrapper {
       display: flex;
       align-items: flex-start;
-      & > * {
+      > * {
         flex: 0 0 100%;
       }
     }
-    & > .indicator {
+    > .indicator {
       position: absolute;
       left: 0;
       bottom: 10%;
       width: 100%;
-    }
-    & > .indicator.divider {
-      bottom: 0;
+      &.divider {
+        bottom: 0;
+      }
     }
   }
 </style>

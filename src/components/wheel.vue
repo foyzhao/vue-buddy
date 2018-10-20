@@ -228,24 +228,24 @@
     height: 200px;
     overflow: hidden;
     -webkit-tap-highlight-color: transparent;
-    & > .wheel-list {
+    > .wheel-list {
       margin: 0;
       padding: 0;
       list-style: none;
       font-size: inherit;
-      & > .wheel-item {
+      > .wheel-item {
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: inherit;
-        & > * {
+        > * {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
       }
     }
-    & > .wheel-cover {
+    > .wheel-cover {
       position: absolute;
       left: 0;
       top: 0;
@@ -254,7 +254,7 @@
       background: linear-gradient(#ffffff99, #ffffff00, #ffffff99);
       pointer-events: none;
     }
-    & > .wheel-indicator {
+    > .wheel-indicator {
       position: absolute;
       box-sizing: border-box;
       border-top: 1px solid #ddd;
@@ -262,19 +262,19 @@
     }
     &.horizontal {
       height: 40px;
-      & > .wheel-list {
+      > .wheel-list {
         display: table;
         height: 100%;
         white-space: nowrap;
-        & > .wheel-item {
+        > .wheel-item {
           display: inline-flex;
           height: 100%;
         }
       }
-      & > .wheel-cover {
+      > .wheel-cover {
         background: linear-gradient(to right, #ffffff99, #ffffff00, #ffffff99);
       }
-      & > .wheel-indicator {
+      > .wheel-indicator {
         border: none;
       }
     }

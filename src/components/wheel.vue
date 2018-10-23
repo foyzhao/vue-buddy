@@ -43,7 +43,7 @@
       window.addEventListener('resize', this.measure)
     },
     mounted() {
-      this.measure()
+      this.$nextTick(() => this.measure())
     },
     computed: {
       itemWidth() {

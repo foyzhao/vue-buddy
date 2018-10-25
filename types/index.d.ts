@@ -9,7 +9,6 @@ export const Lock;
 export const Toast;
 export const ModalDialog;
 export const Indicator;
-export const KeepBack;
 export const Loader;
 export const ViewPager;
 export const Wheel;

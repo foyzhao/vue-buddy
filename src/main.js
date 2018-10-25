@@ -4,7 +4,6 @@ import Lock from './lock'
 import Toast from './toast'
 import ModalDialog from './components/modal-dialog.vue'
 import Indicator from './components/indicator.vue'
-import KeepBack from './components/keep-back.vue'
 import Loader from './components/loader.vue'
 import ViewPager from './components/view-pager.vue'
 import Wheel from './components/wheel.vue'
@@ -24,7 +23,6 @@ function install(Vue) {
   // component
   Vue.component('ModalDialog', ModalDialog);
   Vue.component('Indicator', Indicator);
-  Vue.component('KeepBack', KeepBack);
   Vue.component('Loader', Loader);
   Vue.component('ViewPager', ViewPager);
   Vue.component('Wheel', Wheel);
@@ -51,7 +49,6 @@ export {
   PageEndMixin,
   ModalDialog,
   Indicator,
-  KeepBack,
   Loader,
   ViewPager,
   Wheel,

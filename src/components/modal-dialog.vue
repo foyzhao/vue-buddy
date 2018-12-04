@@ -46,7 +46,7 @@
 <style>
   .modal-dialog {
     position: relative;
-    width: 86%;
+    width: 80%;
     max-height: 86%;
     background: #fff;
     display: flex;

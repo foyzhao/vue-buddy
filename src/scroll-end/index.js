@@ -1,3 +1,4 @@
+// TODO scroll-view component instead
 export default {
   bind(el, binding) {
     let scrollTop = el.scrollTop || 0;

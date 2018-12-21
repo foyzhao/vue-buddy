@@ -7,11 +7,18 @@ const PATTERNS = {
 };
 
 export const formatDate = function (date, pattern = 'date') {
-  if (!date) {
+  if (date === null || date === undefined) {
     return date
   }
-  if (typeof date === 'string') {
-    date = new Date(date.replace(/-/g, '/'))
+  if (!(date instanceof Date)) {
+    let timestamp = Date.parse(date);
+    if (isNaN(timestamp)) {
+      timestamp = Date.parse(date.replace(/-/g, '/'))
+    }
+    if (isNaN(timestamp)) {
+      return 'Invalid Date'
+    }
+    date = new Date(timestamp)
   }
   pattern = PATTERNS[pattern] || pattern;
   const units = {

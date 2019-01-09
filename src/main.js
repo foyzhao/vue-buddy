@@ -5,6 +5,7 @@ import Toast from './toast'
 import ModalDialog from './components/modal-dialog.vue'
 import Indicator from './components/indicator.vue'
 import Loader from './components/loader.vue'
+import ScrollView from './components/scroll-view.vue'
 import ViewPager from './components/view-pager.vue'
 import Wheel from './components/wheel.vue'
 import ScrollEnd from './scroll-end'
@@ -24,6 +25,7 @@ function install(Vue) {
   Vue.component('ModalDialog', ModalDialog);
   Vue.component('Indicator', Indicator);
   Vue.component('Loader', Loader);
+  Vue.component('ScrollView', ScrollView);
   Vue.component('ViewPager', ViewPager);
   Vue.component('Wheel', Wheel);
   // directive
@@ -50,6 +52,7 @@ export {
   ModalDialog,
   Indicator,
   Loader,
+  ScrollView,
   ViewPager,
   Wheel,
   ScrollEnd,

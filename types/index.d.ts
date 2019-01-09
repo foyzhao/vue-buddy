@@ -10,6 +10,7 @@ export const Toast;
 export const ModalDialog;
 export const Indicator;
 export const Loader;
+export const ScrollView;
 export const ViewPager;
 export const Wheel;
 export const ScrollEnd;

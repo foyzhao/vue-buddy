@@ -34,6 +34,6 @@
 <style>
   .scroll-view {
     overflow: auto;
-    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
   }
 </style>

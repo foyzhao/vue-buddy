@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  // TODO abstract touch logic
+  // TODO create less wheel item
   export default {
     props: {
       items: Array,

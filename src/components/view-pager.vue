@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  // TODO abstract touch logic
   export default {
     props: {
       number: Number,

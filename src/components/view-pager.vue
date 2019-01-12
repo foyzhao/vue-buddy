@@ -9,6 +9,7 @@
 
 <script>
   // TODO abstract touch logic
+  // TODO recycle component pager
   export default {
     props: {
       number: Number,

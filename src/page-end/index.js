@@ -1,5 +1,6 @@
 export default {
   created() {
+    console.warn('vue-buddy: PageEnd mixin is deprecated, please use ScrollDetector mixin instead.');
     if (this.$options.onPageEnd) {
       this.$onPageEnd = this.$options.onPageEnd.bind(this);
       window.addEventListener('scroll', this.$scrollListener);

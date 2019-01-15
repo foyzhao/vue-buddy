@@ -1,6 +1,6 @@
-// TODO scroll-view component instead
 export default {
   bind(el, binding) {
+    console.warn('vue-buddy: v-scroll-end directive is deprecated, please use scroll-view component instead.');
     let scrollTop = el.scrollTop || 0;
     el.onscroll = function (e) {
       if (binding.modifiers.up && el.scrollTop < scrollTop) {

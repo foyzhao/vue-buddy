@@ -1,4 +1,5 @@
 import './style.css'
+import ScrollDetector from './scroll-detector/scroll-detector'
 import Layer from './layer'
 import Lock from './lock'
 import Toast from './toast'
@@ -8,8 +9,8 @@ import Loader from './components/loader.vue'
 import ScrollView from './components/scroll-view.vue'
 import ViewPager from './components/view-pager.vue'
 import Wheel from './components/wheel.vue'
-import ScrollEnd from './scroll-end'
-import PageEnd from './page-end'
+import ScrollEnd from './scroll-end' // TODO remove in 1.0.0
+import PageEnd from './page-end' // TODO remove in 1.0.0
 import * as uriUtil from './util/uri'
 import * as uuidUtil from './util/uuid'
 import * as dateUtil from './util/date'
@@ -45,6 +46,7 @@ export const Util = {
 };
 
 export {
+  ScrollDetector,
   Layer,
   Lock,
   Toast,

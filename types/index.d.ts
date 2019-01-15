@@ -4,6 +4,7 @@ export default install;
 
 export const Util;
 
+export const ScrollDetector;
 export const Layer;
 export const Lock;
 export const Toast;

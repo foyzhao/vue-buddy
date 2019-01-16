@@ -39,13 +39,6 @@
       this.$el.removeEventListener('touchend', this.onTouchEnd)
     },
     methods: {
-      getPoint(e) {
-        return {
-          x: e.touches[0].pageX,
-          y: e.touches[0].pageY,
-          time: new Date().getTime()
-        }
-      },
       onTouchStart(e) {
         if (e.touches.length > 1 || this.touchState) {
           return
@@ -93,50 +86,49 @@
           }
           this.$emit('drag', horizontalDistance, verticalDistance);
           if (this.horizontal) {
-            const distance1 = point.x - this.horizontalMoveRecords[0].x;
-            const distance2 = point.x - this.horizontalMoveRecords[this.horizontalMoveRecords.length - 1].x;
-            if (distance1 > 0 && distance2 < 0 || distance1 < 0 && distance2 > 0) {
-              this.horizontalMoveRecords = []
-            } else if (this.horizontalMoveRecords.length >= 4) {
-              this.horizontalMoveRecords.shift()
-            }
-            this.horizontalMoveRecords.push(point)
+            this.recordPoint(this.horizontalMoveRecords, point, 'x')
           }
           if (this.vertical) {
-            const distance1 = point.y - this.verticalMoveRecords[0].y;
-            const distance2 = point.y - this.verticalMoveRecords[this.verticalMoveRecords.length - 1].y;
-            if (distance1 > 0 && distance2 < 0 || distance1 < 0 && distance2 > 0) {
-              this.verticalMoveRecords = []
-            } else if (this.verticalMoveRecords.length >= 4) {
-              this.verticalMoveRecords.shift()
-            }
-            this.verticalMoveRecords.push(point)
+            this.recordPoint(this.verticalMoveRecords, point, 'y')
           }
         }
       },
       onTouchEnd() {
         if (this.touchState) {
-          let horizontalVelocity = 0;
-          let verticalVelocity = 0;
+          let horizontalVelocity = 0, verticalVelocity = 0;
           if (this.horizontal) {
-            const distance = this.horizontalMoveRecords[this.horizontalMoveRecords.length - 1].x - this.horizontalMoveRecords[0].x;
-            const time = this.horizontalMoveRecords[this.horizontalMoveRecords.length - 1].time - this.horizontalMoveRecords[0].time;
-            horizontalVelocity = distance / time
+            horizontalVelocity = this.computeVelocity(this.horizontalMoveRecords)
           }
           if (this.vertical) {
-            const distance = this.horizontalMoveRecords[this.horizontalMoveRecords.length - 1].y - this.horizontalMoveRecords[0].y;
-            const time = this.horizontalMoveRecords[this.horizontalMoveRecords.length - 1].time - this.horizontalMoveRecords[0].time;
-            verticalVelocity = distance / time
+            verticalVelocity = this.computeVelocity(this.verticalMoveRecords)
           }
-          if (Math.abs(horizontalVelocity) > 0.5 || Math.abs(verticalVelocity) > 0.5) {
-            this.$emit('fling', horizontalVelocity, verticalVelocity)
-          } else {
-            this.$emit('release')
-          }
+          this.$emit('release', horizontalVelocity, verticalVelocity);
           this.horizontalMoveRecords = [];
           this.verticalMoveRecords = [];
           this.touchState = 0
         }
+      },
+      getPoint(e) {
+        return {
+          x: e.touches[0].pageX,
+          y: e.touches[0].pageY,
+          time: new Date().getTime()
+        }
+      },
+      recordPoint(records, point, xy) {
+        const distance1 = point[xy] - records[0][xy];
+        const distance2 = point[xy] - records[records.length - 1][xy];
+        if (distance1 > 0 && distance2 < 0 || distance1 < 0 && distance2 > 0) {
+          records.length = 0
+        } else if (records.length >= 4) {
+          records.shift()
+        }
+        records.push(point)
+      },
+      computeVelocity(moveRecords) {
+        const distance = moveRecords[moveRecords.length - 1].x - moveRecords[0].x;
+        const time = moveRecords[moveRecords.length - 1].time - moveRecords[0].time;
+        return distance / time
       }
     }
   }

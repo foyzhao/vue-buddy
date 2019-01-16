@@ -97,10 +97,10 @@
         if (this.touchState) {
           let horizontalVelocity = 0, verticalVelocity = 0;
           if (this.horizontal) {
-            horizontalVelocity = this.computeVelocity(this.horizontalMoveRecords)
+            horizontalVelocity = this.computeVelocity(this.horizontalMoveRecords, 'x')
           }
           if (this.vertical) {
-            verticalVelocity = this.computeVelocity(this.verticalMoveRecords)
+            verticalVelocity = this.computeVelocity(this.verticalMoveRecords, 'y')
           }
           this.$emit('release', horizontalVelocity, verticalVelocity);
           this.horizontalMoveRecords = [];
@@ -125,8 +125,8 @@
         }
         records.push(point)
       },
-      computeVelocity(moveRecords) {
-        const distance = moveRecords[moveRecords.length - 1].x - moveRecords[0].x;
+      computeVelocity(moveRecords, xy) {
+        const distance = moveRecords[moveRecords.length - 1][xy] - moveRecords[0][xy];
         const time = moveRecords[moveRecords.length - 1].time - moveRecords[0].time;
         return distance / time
       }

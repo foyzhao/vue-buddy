@@ -12,6 +12,7 @@ export const GestureDetector;
 export const ModalDialog;
 export const Indicator;
 export const Loader;
+export const SlideView;
 export const ScrollView;
 export const ViewPager;
 export const Wheel;

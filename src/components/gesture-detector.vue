@@ -1,4 +1,5 @@
 <script>
+  // TODO remove
   export default {
     abstract: true,
     props: {
@@ -17,8 +18,6 @@
     },
     data() {
       return {
-        targetWidth: 0,
-        targetHeight: 0,
         touchState: 0,
         downPoint: null,
         horizontalMoveRecords: [],
@@ -44,8 +43,6 @@
           return
         }
         this.touchState = 1;
-        this.targetWidth = this.$el.clientWidth;
-        this.targetHeight = this.$el.clientHeight;
         this.downPoint = this.lastMovePoint = this.getPoint(e)
       },
       onTouchMove(e) {
@@ -72,7 +69,7 @@
             if (damping >= 1) {
               horizontalDistance = 0
             } else if (damping > 0) {
-              horizontalDistance = Math.tanh(horizontalDistance * (1 - damping) / this.targetWidth) * this.targetWidth * (1 - damping)
+              horizontalDistance = Math.tanh(horizontalDistance * (1 - damping) / 400) * 400 * (1 - damping)
             }
           }
           if (this.vertical) {
@@ -81,7 +78,7 @@
             if (damping >= 1) {
               verticalDistance = 0
             } else if (damping > 0) {
-              verticalDistance = Math.tanh(verticalDistance * (1 - damping) / this.targetHeight) * this.targetHeight * (1 - damping)
+              verticalDistance = Math.tanh(verticalDistance * (1 - damping) / 400) * 400 * (1 - damping)
             }
           }
           this.$emit('drag', horizontalDistance, verticalDistance);
@@ -95,16 +92,18 @@
       },
       onTouchEnd() {
         if (this.touchState) {
-          let horizontalVelocity = 0, verticalVelocity = 0;
-          if (this.horizontal) {
-            horizontalVelocity = this.computeVelocity(this.horizontalMoveRecords, 'x')
+          if (this.touchState > 1) {
+            let horizontalVelocity = 0, verticalVelocity = 0;
+            if (this.horizontal) {
+              horizontalVelocity = this.computeVelocity(this.horizontalMoveRecords, 'x')
+            }
+            if (this.vertical) {
+              verticalVelocity = this.computeVelocity(this.verticalMoveRecords, 'y')
+            }
+            this.$emit('release', horizontalVelocity, verticalVelocity);
+            this.horizontalMoveRecords = [];
+            this.verticalMoveRecords = [];
           }
-          if (this.vertical) {
-            verticalVelocity = this.computeVelocity(this.verticalMoveRecords, 'y')
-          }
-          this.$emit('release', horizontalVelocity, verticalVelocity);
-          this.horizontalMoveRecords = [];
-          this.verticalMoveRecords = [];
           this.touchState = 0
         }
       },

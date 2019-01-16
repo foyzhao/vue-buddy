@@ -18,6 +18,7 @@
 <script>
   import GestureDetector from './gesture-detector.vue'
 
+  // TODO use slide-view
   // TODO recycle component pager
   export default {
     components: {

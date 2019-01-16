@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     onTouchStart(e) {
+      // TODO check overflow
       if (e.currentTarget.clientHeight < e.currentTarget.scrollHeight) {
         this.downX = e.touches[0].pageX;
         this.downY = e.touches[0].pageY;

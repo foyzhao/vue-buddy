@@ -99,7 +99,7 @@ export default {
       this.$emit('slide', offsetX, offsetY)
     },
     onTouchEnd() {
-      if (this.ignored) {
+      if (!this.detected || this.ignored) {
         return
       }
       let velocityX = 0, velocityY = 0;

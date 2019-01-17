@@ -1,28 +1,26 @@
 <template>
-  <gesture-detector
+  <slide-view
+      class="view-pager"
       horizontal
-      :left-damping="leftDamping"
-      :right-damping="rightDamping"
-      @press="onPress"
-      @drag="onDrag"
-      @release="onRelease">
-    <div class="view-pager">
-      <div class="view-wrapper" :style="viewWrapperStyle">
-        <slot/>
-      </div>
-      <slot name="cover" :current="pagerCurrent" :number="pagerNumber"/>
+      :damping-left="dampingLeft"
+      :damping-right="dampingRight"
+      @start="onStart"
+      @slide="onSlide"
+      @end="onEnd">
+    <div class="view-wrapper" :style="viewWrapperStyle">
+      <slot/>
     </div>
-  </gesture-detector>
+    <slot name="cover" :current="pagerCurrent" :number="pagerNumber"/>
+  </slide-view>
 </template>
 
 <script>
-  import GestureDetector from './gesture-detector.vue'
+  import SlideView from './slide-view'
 
-  // TODO use slide-view
   // TODO recycle component pager
   export default {
     components: {
-      GestureDetector
+      SlideView
     },
     props: {
       current: {
@@ -42,7 +40,7 @@
         pagerNumber: this.number,
         pagerWidth: 0,
         pagerOffset: 0,
-        touching: false
+        sliding: false
       }
     },
     computed: {
@@ -52,15 +50,15 @@
       isLast() {
         return this.pagerCurrent === this.pagerNumber - 1
       },
-      leftDamping() {
+      dampingLeft() {
         return this.isFirst ? this.damping : 0
       },
-      rightDamping() {
+      dampingRight() {
         return this.isLast ? this.damping : 0
       },
       viewWrapperStyle() {
         return {
-          transition: this.touching ? 'none' : '.2s',
+          transition: this.sliding ? 'none' : '.2s',
           transform: `translateX(${this.pagerOffset - this.pagerWidth * this.pagerCurrent}px)`
         }
       }
@@ -83,8 +81,8 @@
       pagerCurrent(value) {
         this.$emit('update:current', value)
       },
-      touching() {
-        if (this.touching) {
+      sliding() {
+        if (this.sliding) {
           this.clearInterval()
         } else {
           this.setInterval()
@@ -115,24 +113,25 @@
       window.removeEventListener('resize', this.onResize)
     },
     methods: {
-      onPress() {
+      onStart() {
+        // TODO a better place?
         if (this.number === undefined) {
           this.pagerNumber = this.$el.children[0].children.length
         }
         if (!this.pagerWidth) {
           this.onResize()
         }
-        this.touching = true
+        this.sliding = true
       },
-      onDrag(offset) {
-        this.pagerOffset = offset
+      onSlide(offsetX) {
+        this.pagerOffset = offsetX
       },
-      onRelease(velocity) {
-        this.touching = false;
-        if (!this.isFirst && (velocity > 0.5 && this.pagerOffset > 0 || this.pagerOffset > this.pagerWidth / 2 && velocity > 0)) {
+      onEnd(velocityX) {
+        this.sliding = false;
+        if (!this.isFirst && (velocityX > 0.5 && this.pagerOffset > 0 || this.pagerOffset > this.pagerWidth / 2 && velocityX > 0)) {
           this.pagerCurrent--
         }
-        if (!this.isLast && (velocity < -0.5 && this.pagerOffset < 0 || this.pagerOffset < this.pagerWidth / -2 && velocity < 0)) {
+        if (!this.isLast && (velocityX < -0.5 && this.pagerOffset < 0 || this.pagerOffset < this.pagerWidth / -2 && velocityX < 0)) {
           this.pagerCurrent++
         }
         this.pagerOffset = 0

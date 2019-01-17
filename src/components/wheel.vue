@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  // TODO abstract touch logic
+  // TODO user slide-view component
   // TODO create less wheel item
   export default {
     props: {

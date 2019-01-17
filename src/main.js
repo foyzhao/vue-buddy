@@ -3,7 +3,6 @@ import ScrollDetector from './scroll-detector/scroll-detector'
 import Layer from './layer'
 import Lock from './lock'
 import Toast from './toast'
-import GestureDetector from './components/gesture-detector.vue'
 import ModalDialog from './components/modal-dialog.vue'
 import Indicator from './components/indicator.vue'
 import Loader from './components/loader.vue'
@@ -25,7 +24,6 @@ function install(Vue) {
   Vue.use(Lock);
   Vue.use(Toast);
   // component
-  Vue.component('GestureDetector', GestureDetector);
   Vue.component('ModalDialog', ModalDialog);
   Vue.component('Indicator', Indicator);
   Vue.component('Loader', Loader);
@@ -54,7 +52,6 @@ export {
   Layer,
   Lock,
   Toast,
-  GestureDetector,
   ModalDialog,
   Indicator,
   Loader,

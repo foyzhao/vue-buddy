@@ -8,7 +8,6 @@ export const ScrollDetector;
 export const Layer;
 export const Lock;
 export const Toast;
-export const GestureDetector;
 export const ModalDialog;
 export const Indicator;
 export const Loader;

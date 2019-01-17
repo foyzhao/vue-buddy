@@ -4,6 +4,7 @@
     <header class="header">
       <slot name="header"/>
     </header>
+    <!--TODO use scroll-view-->
     <div class="body" v-scroll.end="() => $emit('scroll-end')">
       <slot/>
     </div>

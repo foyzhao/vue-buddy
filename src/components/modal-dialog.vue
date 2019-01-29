@@ -4,10 +4,9 @@
     <header class="header">
       <slot name="header"/>
     </header>
-    <!--TODO use scroll-view-->
-    <div class="body" v-scroll.end="() => $emit('scroll-end')">
+    <scroll-view class="body" @bottom="$emit('scroll-bottom')">
       <slot/>
-    </div>
+    </scroll-view>
     <footer class="footer">
       <slot name="footer"/>
     </footer>
@@ -15,9 +14,12 @@
 </template>
 
 <script>
-  import ScrollEnd from '../scroll-end'
+  import ScrollView from './scroll-view'
 
   export default {
+    components: {
+      ScrollView
+    },
     inject: {
       cancelable: {
         default: false
@@ -28,9 +30,6 @@
     },
     props: {
       closeable: Boolean
-    },
-    directives: {
-      scroll: ScrollEnd
     },
     methods: {
       close() {

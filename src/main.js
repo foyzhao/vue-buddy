@@ -1,17 +1,14 @@
 import './style.css'
-import ScrollDetector from './scroll-detector/scroll-detector'
 import Layer from './layer'
 import Lock from './lock'
 import Toast from './toast'
-import ModalDialog from './components/modal-dialog.vue'
-import Indicator from './components/indicator.vue'
 import Loader from './components/loader.vue'
-import SlideView from './components/slide-view'
+import ModalDialog from './components/modal-dialog.vue'
 import ScrollView from './components/scroll-view'
+import SlideView from './components/slide-view'
 import ViewPager from './components/view-pager.vue'
 import Wheel from './components/wheel.vue'
-import ScrollEnd from './scroll-end' // TODO remove in 1.0.0
-import PageEnd from './page-end' // TODO remove in 1.0.0
+import WindowScrollDetector from './mixin/window-scroll-detector'
 import * as uriUtil from './util/uri'
 import * as uuidUtil from './util/uuid'
 import * as dateUtil from './util/date'
@@ -24,15 +21,12 @@ function install(Vue) {
   Vue.use(Lock);
   Vue.use(Toast);
   // component
-  Vue.component('ModalDialog', ModalDialog);
-  Vue.component('Indicator', Indicator);
   Vue.component('Loader', Loader);
-  Vue.component('SlideView', SlideView);
+  Vue.component('ModalDialog', ModalDialog);
   Vue.component('ScrollView', ScrollView);
+  Vue.component('SlideView', SlideView);
   Vue.component('ViewPager', ViewPager);
   Vue.component('Wheel', Wheel);
-  // directive
-  Vue.directive('scroll', ScrollEnd);
   // filter
   Vue.filter('date', dateUtil.formatDate);
 }
@@ -48,18 +42,15 @@ export const Util = {
 };
 
 export {
-  ScrollDetector,
   Layer,
   Lock,
   Toast,
-  ModalDialog,
-  Indicator,
   Loader,
-  SlideView,
+  ModalDialog,
   ScrollView,
+  SlideView,
   ViewPager,
   Wheel,
-  ScrollEnd,
-  PageEnd,
+  WindowScrollDetector,
   install
 };

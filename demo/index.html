@@ -12,12 +12,11 @@
 </head>
 <body>
   <div id="app">
-    <view-pager>
+    <view-pager indicator>
       <div class="page">page A</div>
       <div class="page">page B</div>
       <div class="page">page C</div>
       <div class="page">page D</div>
-      <indicator slot="cover" slot-scope="scope" v-bind="scope"></indicator>
     </view-pager>
 
     <wheel :items="wheelItems" v-model="wheelValue" horizontal></wheel>
@@ -29,7 +28,21 @@
     <button @click="lock">lock 3 sec</button>
     <button @click="$toast('toast a message')">toast</button>
     <button @click="copyTime">copy time</button>
-
+    <scroll-view style="height: 100px;overflow: auto;" @bottom="lock">
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </scroll-view>
     <p>Loader:
       <loader inline></loader>
     </p>
@@ -48,8 +61,8 @@
   <script src="../dist/vue-buddy.js"></script>
   <script>
     Vue.use(VueBuddy);
-    v = new Vue({
-      mixins: [VueBuddy.ScrollDetector],
+    new Vue({
+      mixins: [VueBuddy.WindowScrollDetector],
       el: '#app',
       data: {
         wheelItems: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
@@ -65,7 +78,7 @@
         },
         copyTime() {
           VueBuddy.Util.copyToClipboard(new Date().toLocaleString());
-          this.$toast('copy success');
+          this.$toast('complete')
         },
         onScrollTop() {
           this.$toast('top', 500)

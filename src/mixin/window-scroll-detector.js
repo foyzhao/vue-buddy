@@ -2,22 +2,22 @@ const doc = document.documentElement;
 
 export default {
   created() {
-    this.$_scrollDetectorMixin_scrollTop = 0;
-    window.addEventListener('scroll', this.$_scrollDetectorMixin_onScroll)
+    this.$_windowScrollDetectorMixin_scrollTop = 0;
+    window.addEventListener('scroll', this.$_windowScrollDetectorMixin_onScroll)
   },
   activated() {
-    window.addEventListener('scroll', this.$_scrollDetectorMixin_onScroll)
+    window.addEventListener('scroll', this.$_windowScrollDetectorMixin_onScroll)
   },
   deactivated() {
-    window.removeEventListener('scroll', this.$_scrollDetectorMixin_onScroll)
+    window.removeEventListener('scroll', this.$_windowScrollDetectorMixin_onScroll)
   },
   destroyed() {
-    window.removeEventListener('scroll', this.$_scrollDetectorMixin_onScroll)
+    window.removeEventListener('scroll', this.$_windowScrollDetectorMixin_onScroll)
   },
   methods: {
-    $_scrollDetectorMixin_onScroll() {
+    $_windowScrollDetectorMixin_onScroll() {
       const scrollTop = doc.scrollTop || window.pageYOffset || document.body.scrollTop;
-      if (scrollTop < this.$_scrollDetectorMixin_scrollTop) {
+      if (scrollTop < this.$_windowScrollDetectorMixin_scrollTop) {
         this.onScrollUp(scrollTop);
         if (!scrollTop) {
           this.onScrollTop(scrollTop)
@@ -28,7 +28,7 @@ export default {
           this.onScrollBottom(scrollTop)
         }
       }
-      this.$_scrollDetectorMixin_scrollTop = scrollTop
+      this.$_windowScrollDetectorMixin_scrollTop = scrollTop
     },
     onScrollUp(scrollTop) {
     },
@@ -40,4 +40,3 @@ export default {
     }
   }
 }
-

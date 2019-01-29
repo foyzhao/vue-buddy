@@ -1,158 +1,168 @@
 <template>
   <slide-view
-      class="view-pager"
-      horizontal
-      :damping-left="dampingLeft"
-      :damping-right="dampingRight"
-      @start="onStart"
-      @slide="onSlide"
-      @end="onEnd">
-    <div class="view-wrapper" :style="viewWrapperStyle">
+      :class="['view-pager', {vertical}]"
+      :room-left="roomLeft"
+      :room-right="roomRight"
+      :room-top="roomTop"
+      :room-bottom="roomBottom"
+      :damping-left="damping"
+      :damping-right="damping"
+      :damping-top="damping"
+      :damping-bottom="damping"
+      @start="transition = false"
+      @slide="slide"
+      @stop="reset">
+    <div class="view-wrapper" :style="wrapperStyle">
       <slot/>
     </div>
-    <slot name="cover" :current="pagerCurrent" :number="pagerNumber"/>
+    <ul v-if="indicator" class="indicator">
+      <li v-for="i in number"
+          :key="i"
+          :class="['item', {active: mCurrent === i - 1}]"/>
+    </ul>
+    <slot name="cover" class="cover" :current="mCurrent" :number="number"/>
   </slide-view>
 </template>
 
 <script>
   import SlideView from './slide-view'
 
-  // TODO recycle component pager
+  // TODO emit slide state
+  // TODO recycler view
+  // TODO loop
   export default {
     components: {
       SlideView
     },
     props: {
+      vertical: Boolean,
       current: {
         type: Number,
         default: 0
       },
-      number: Number,
       damping: {
         type: Number,
-        default: 0.5
+        default: 0.6
       },
+      indicator: Boolean,
       interval: Number
     },
     data() {
       return {
-        pagerCurrent: this.current,
-        pagerNumber: this.number,
-        pagerWidth: 0,
-        pagerOffset: 0,
-        sliding: false
+        mCurrent: this.current,
+        number: 0,
+        size: 0,
+        offset: 0,
+        transition: false
       }
     },
     computed: {
-      isFirst() {
-        return this.pagerCurrent === 0
+      roomLeft() {
+        if (!this.vertical && this.number > 0) {
+          return (this.number - this.mCurrent - 1) * this.size
+        }
       },
-      isLast() {
-        return this.pagerCurrent === this.pagerNumber - 1
+      roomRight() {
+        if (!this.vertical && this.number > 0) {
+          return this.mCurrent * this.size
+        }
       },
-      dampingLeft() {
-        return this.isFirst ? this.damping : 0
+      roomTop() {
+        if (this.vertical && this.number > 0) {
+          return (this.number - this.mCurrent - 1) * this.size
+        }
       },
-      dampingRight() {
-        return this.isLast ? this.damping : 0
+      roomBottom() {
+        if (this.vertical && this.number > 0) {
+          return this.mCurrent * this.size
+        }
       },
-      viewWrapperStyle() {
+      wrapperStyle() {
         return {
-          transition: this.sliding ? 'none' : '.2s',
-          transform: `translateX(${this.pagerOffset - this.pagerWidth * this.pagerCurrent}px)`
+          transition: this.transition ? '.2s' : 'none',
+          transform: `translate${this.vertical ? 'Y' : 'X'}(${this.offset - this.size * this.mCurrent}px)`
         }
       }
     },
     watch: {
-      current(value, oldValue) {
-        if (value < 0 || value && value >= this.pagerNumber || 0) {
-          this.$emit('update:current', oldValue)
-        } else {
-          this.pagerCurrent = value
+      current(value) {
+        if (this.mCurrent !== value) {
+          if (value >= 0 && value < this.number) {
+            this.mCurrent = value
+          } else {
+            console.warn('ViewPager: Invalid current value: ' + value)
+          }
         }
       },
-      number(value) {
-        // TODO slot dynamic change
-        this.pagerNumber = value;
-        if (this.pagerCurrent >= this.pagerNumber) {
-          this.pagerCurrent = Math.max(0, value - 1)
-        }
-      },
-      pagerCurrent(value) {
+      mCurrent(value) {
         this.$emit('update:current', value)
       },
-      sliding() {
-        if (this.sliding) {
-          this.clearInterval()
-        } else {
-          this.setInterval()
+      number(value) {
+        if (this.mCurrent >= value) {
+          this.mCurrent = Math.max(0, value - 1)
         }
+        this.autoPlay()
+      },
+      transition() {
+        this.autoPlay()
+      },
+      interval() {
+        this.autoPlay()
       }
     },
     created() {
-      window.addEventListener('resize', this.onResize)
+      window.addEventListener('resize', this.measure)
     },
     mounted() {
-      this.onResize();
-      if (this.number === undefined) {
-        this.$nextTick(() => {
-          this.pagerNumber = this.$el.children[0].children.length
-        })
-      }
-      this.setInterval()
+      this.$nextTick(() => {
+        this.number = this.$el.children[0].children.length;
+        this.transition = true
+      });
+      this.measure()
     },
     activated() {
-      // TODO activated width change ?
-      this.setInterval()
+      window.addEventListener('resize', this.measure);
+      this.measure()
+    },
+    updated() {
+      this.number = this.$el.children[0].children.length
     },
     deactivated() {
-      this.clearInterval();
+      window.removeEventListener('resize', this.measure)
     },
     destroyed() {
-      this.clearInterval();
-      window.removeEventListener('resize', this.onResize)
+      window.removeEventListener('resize', this.measure)
     },
     methods: {
-      onStart() {
-        // TODO a better place?
-        if (this.number === undefined) {
-          this.pagerNumber = this.$el.children[0].children.length
-        }
-        if (!this.pagerWidth) {
-          this.onResize()
-        }
-        this.sliding = true
+      measure() {
+        this.size = this.vertical ? this.$el.clientHeight : this.$el.clientWidth
       },
-      onSlide(offsetX) {
-        this.pagerOffset = offsetX
+      slide(offsetX, offsetY) {
+        this.offset = this.vertical ? offsetY : offsetX
       },
-      onEnd(velocityX) {
-        this.sliding = false;
-        if (!this.isFirst && (velocityX > 0.5 && this.pagerOffset > 0 || this.pagerOffset > this.pagerWidth / 2 && velocityX > 0)) {
-          this.pagerCurrent--
+      reset(velocityX, velocityY) {
+        this.transition = true;
+        const velocity = this.vertical ? velocityY : velocityX;
+        if (this.mCurrent > 0 && (velocity > 0.5 && this.offset > 0 || this.offset > this.size / 2 && velocity > 0)) {
+          this.mCurrent--
         }
-        if (!this.isLast && (velocityX < -0.5 && this.pagerOffset < 0 || this.pagerOffset < this.pagerWidth / -2 && velocityX < 0)) {
-          this.pagerCurrent++
+        if (this.mCurrent < this.number - 1 && (velocity < -0.5 && this.offset < 0 || this.offset < this.size / -2 && velocity < 0)) {
+          this.mCurrent++
         }
-        this.pagerOffset = 0
+        this.offset = 0
       },
-      onResize() {
-        this.pagerWidth = this.$el.clientWidth
-      },
-      setInterval() {
-        this.clearInterval();
-        if (this.interval > 0) {
-          this.timer = setInterval(() => {
-            if (this.isLast) {
-              this.pagerCurrent = 0
+      autoPlay() {
+        clearTimeout(this.timer);
+        if (this.transition && this.interval > 0 && this.number > 0) {
+          this.timer = setTimeout(() => {
+            if (this.mCurrent < this.number - 1) {
+              this.mCurrent++
             } else {
-              this.pagerCurrent++
+              this.mCurrent = 0
             }
+            this.autoPlay()
           }, this.interval)
         }
-      },
-      clearInterval() {
-        clearInterval(this.timer)
       }
     }
   }
@@ -163,8 +173,14 @@
     position: relative;
     overflow: hidden;
     > .view-wrapper {
+      height: 100%;
+      > * {
+        height: 100%;
+        box-sizing: border-box;
+      }
+    }
+    &:not(.vertical) > .view-wrapper {
       display: flex;
-      align-items: flex-start;
       > * {
         flex: 0 0 100%;
       }
@@ -172,10 +188,35 @@
     > .indicator {
       position: absolute;
       left: 0;
-      bottom: 10%;
-      width: 100%;
-      &.divider {
-        bottom: 0;
+      right: 0;
+      bottom: 1rem;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      > .item {
+        width: 8px;
+        height: 8px;
+        margin: 0 4px;
+        background: #00000066;
+        border-radius: 4px;
+        vertical-align: middle;
+        transition: .2s;
+        &.active {
+          background: #000000;
+        }
+      }
+    }
+    &.vertical > .indicator {
+      left: auto;
+      right: 1rem;
+      top: 0;
+      bottom: 0;
+      flex-direction: column;
+      > .item {
+        margin: 4px 0;
       }
     }
   }

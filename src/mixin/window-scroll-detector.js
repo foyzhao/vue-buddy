@@ -19,12 +19,12 @@ export default {
       const scrollTop = doc.scrollTop || window.pageYOffset || document.body.scrollTop;
       if (scrollTop < this.$_windowScrollDetectorMixin_scrollTop) {
         this.onScrollUp(scrollTop);
-        if (!scrollTop) {
+        if (scrollTop <= 0) {
           this.onScrollTop(scrollTop)
         }
       } else {
         this.onScrollDown(scrollTop);
-        if (scrollTop + doc.clientHeight === doc.scrollHeight) {
+        if (scrollTop + doc.clientHeight >= doc.scrollHeight) {
           this.onScrollBottom(scrollTop)
         }
       }

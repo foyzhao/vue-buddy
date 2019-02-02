@@ -16,6 +16,9 @@ export const formatDate = function (date, pattern = 'date') {
       timestamp = Date.parse(date.replace(/-/g, '/'))
     }
     if (isNaN(timestamp)) {
+      timestamp = Date.parse(date.replace(/(\d\d)(\d\d)$/, "$1:$2"))
+    }
+    if (isNaN(timestamp)) {
       return 'Invalid Date'
     }
     date = new Date(timestamp)

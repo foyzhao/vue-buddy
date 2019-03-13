@@ -81,10 +81,16 @@
         transform: rotate(-45deg);
       }
     }
+    > .header {
+      flex: 0 0 auto;
+    }
     > .body {
       flex: 1 1 auto;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+    }
+    > .footer {
+      flex: 0 0 auto;
     }
   }
 </style>

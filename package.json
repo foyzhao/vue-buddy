@@ -20,22 +20,22 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "babel-loader": "^8.0.5",
-    "clean-webpack-plugin": "^1.0.0",
-    "css-loader": "^2.1.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "css-loader": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "postcss-clean": "^1.1.0",
     "postcss-color-hex-alpha": "^5.0.2",
     "postcss-custom-properties": "^8.0.9",
     "postcss-loader": "^3.0.0",
-    "postcss-nested": "^4.1.1",
-    "vue": "^2.5.21",
-    "vue-loader": "^15.5.1",
-    "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.28.1",
-    "webpack-cli": "^3.2.1"
+    "postcss-nested": "^4.1.2",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "peerDependencies": {
     "vue": "^2.5.17"

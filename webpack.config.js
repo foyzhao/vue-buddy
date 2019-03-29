@@ -60,7 +60,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin('dist'),
+    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'vue-buddy.css'

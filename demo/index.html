@@ -28,25 +28,9 @@
     <button @click="lock">lock 3 sec</button>
     <button @click="$toast('toast a message')">toast</button>
     <button @click="copyTime">copy time</button>
-    <scroll-view style="height: 100px;overflow: auto;" @bottom="lock">
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-    </scroll-view>
     <p>Loader:
       <loader inline></loader>
     </p>
-
     <p>Date: {{now | date}}</p>
     <p>Time: {{now | date('time')}}</p>
     <p>Datetime: {{now | date('datetime')}}</p>

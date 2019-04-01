@@ -1,5 +1,3 @@
-const doc = document.documentElement;
-
 export default {
   created() {
     this.$_windowScrollDetectorMixin_scrollTop = 0;
@@ -16,6 +14,7 @@ export default {
   },
   methods: {
     $_windowScrollDetectorMixin_onScroll() {
+      const doc = document.documentElement;
       const scrollTop = doc.scrollTop || window.pageYOffset || document.body.scrollTop;
       if (scrollTop < this.$_windowScrollDetectorMixin_scrollTop) {
         this.onScrollUp(scrollTop);
@@ -24,7 +23,8 @@ export default {
         }
       } else {
         this.onScrollDown(scrollTop);
-        if (scrollTop + doc.clientHeight >= doc.scrollHeight) {
+        const clientHeight = Math.max(doc.clientHeight, window.innerHeight);
+        if (scrollTop + clientHeight >= doc.scrollHeight) {
           this.onScrollBottom(scrollTop)
         }
       }
